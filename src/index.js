@@ -8,6 +8,9 @@ game = {
   posSecond: {x: 200, y: 20},
 }
 
+
+const socket = new WebSocket('ws://192.168.0.140:8000/') // INIT WS CONNECTION
+
 const onKeypress = (event) => {
   event.preventDefault()
 }

@@ -4,6 +4,7 @@ const Game = require('./Game')
 const fs = require('fs')
 const path = require('path')
 const http = require('http')
+const Websocket = require('websocket').server
 
 
 // === STATIC FILES ===
@@ -43,4 +44,22 @@ const server = http.createServer((req, res) => {
 
 server.listen(8000, () => {
   console.log('Listen port 8000')
+})
+
+// === UPGRADE TO WS SERVER ===
+
+const ws = new Websocket({
+  httpServer: server,
+  autoAcceptConnections: false
+})
+
+const connections = [] // ARRAY OF CONNECTIONS
+let connectionId = 0   // ID CONNECTION
+
+ws.on('request', req => {
+  const connection = req.accept('', req.origin)  // CREATE WS CONNECTION
+  connection.connectionId = connectionId
+  connectionId += 1
+  connections.push(connection)
+  console.log('=== CONNECTED № ' + connection.connectionId + ' ===')
 })
