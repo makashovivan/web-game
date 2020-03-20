@@ -1,6 +1,6 @@
 'use strict'
 
-const Game = require('./Game')
+const GameState = require('./GameState')
 const fs = require('fs')
 const path = require('path')
 const http = require('http')
@@ -62,4 +62,5 @@ ws.on('request', req => {
   connectionId += 1
   connections.push(connection)
   console.log('=== CONNECTED № ' + connection.connectionId + ' ===')
+  console.dir('CLIENT IP: ' + connection.remoteAddress)
 })

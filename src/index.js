@@ -2,10 +2,15 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 
-game = {
-  bullets: [],
-  posFirst: {x: 10, y: 20},
-  posSecond: {x: 200, y: 20},
+gameState = {
+  playerFirst:{
+    pos: {x: 10, y: 20},
+    bullets: [],
+  },
+  playerSecond: {
+    pos: {x: 200, y: 20},
+    bullets: [],
+  },
 }
 
 
@@ -13,26 +18,28 @@ const socket = new WebSocket('ws://192.168.0.140:8000/') // INIT WS CONNECTION
 
 const onKeypress = (event) => {
   event.preventDefault()
+  console.log(event.code)
 }
 document.addEventListener('keydown', (event) => {onKeypress(event)})
 
-const rerender = (game) => {
+const rerender = (gameState) => {
   ctx.clearRect(0,0,1300,500)
 
-  game.bullets.forEach(element => {
-      if (element != null && element.x <= 500){
-        ctx.fillRect(element.x, element.y, 5, 5)
-      }
-      else {}
-    }
-  )
   ctx.fillStyle = "Green"
-  ctx.fillRect(game.posFirst.x, game.posFirst.y, 50, 50)
+  ctx.fillRect(gameState.playerFirst.pos.x, gameState.playerFirst.pos.y, 50, 50)
+  gameState.playerFirst.bullets.forEach(bullet => {
+    ctx.fillRect(bullet.x, bullet.y, 5, 5)
+  })
+
   ctx.fillStyle = "Red"
-  ctx.fillRect(game.posSecond.x, game.posSecond.y, 50, 50)
-  requestAnimationFrame(() => {rerender(game)})
+  ctx.fillRect(gameState.playerSecond.pos.x, gameState.playerSecond.pos.y, 50, 50)
+  gameState.playerSecond.bullets.forEach(bullet => {
+    ctx.fillRect(bullet.x, bullet.y, 5, 5)
+  })  
+
+  requestAnimationFrame(() => {rerender(gameState)})
 }
 
 
-let requestID = requestAnimationFrame(() => {rerender(game)})
+let requestID = requestAnimationFrame(() => {rerender(gameState)})
 
