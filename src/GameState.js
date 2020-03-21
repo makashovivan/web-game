@@ -18,7 +18,11 @@ class GameState {
       bullets: [],
     }
 
-    this.gameTimer = setInterval(this.gameLoop, 50)
+    this.gameTimer = setInterval(() => this.gameLoop(), 50)
+  }
+
+  startGame(){
+
   }
 
   
@@ -31,13 +35,14 @@ class GameState {
       if (bullet.x >= 0){bullet.x -= 1}
       else {bullets.splice(index, 1)}
     })
+    console.log('keep going')
   }
+
 
   eventHandler(eventCode, player) {
     switch (eventCode){
       case 'Space':
-        this[player].bullets.push(this[player].pos)
-      //const id = (~~(Math.random()*1e5)).toString(16) 
+        this[player].bullets.push(this[player].pos) 
         break
       case 'ArrowDown':
         this[player].pos.y += 10
@@ -54,8 +59,13 @@ class GameState {
       default:
         {}
         break	
-      }
     }
+  }
+
+  rotateScene(){
+
+  }
+
 }
 
 module.exports = GameState

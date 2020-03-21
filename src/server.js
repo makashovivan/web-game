@@ -1,6 +1,7 @@
 'use strict'
 
 const GameState = require('./GameState')
+const Room = require('./Room')
 const fs = require('fs')
 const path = require('path')
 const http = require('http')
@@ -53,14 +54,37 @@ const ws = new Websocket({
   autoAcceptConnections: false
 })
 
-const connections = [] // ARRAY OF CONNECTIONS
-let connectionId = 0   // ID CONNECTION
+
+const connections = {} //  CONNECTIONS
+const rooms = {} //  ROOMS
+
+
+const createRoom = () => {
+  let freeConnections = []
+  for (let key in connections){
+    if (connections[key].isFree){
+      freeConnections.push(connections[key])
+    }
+  }
+  if (freeConnections.length != 0 && freeConnections.length % 2 ==0){
+    for (let index = 0; index < freeConnections.length; index += 2){
+      const room = new Room(freeConnections[index], freeConnections[index + 1])
+      console.log('     ROOM CREATED ' + freeConnections[index].connectionId + ' ' + freeConnections[index + 1].connectionId)
+      freeConnections[index].isFree = false
+      freeConnections[index + 1].isFree = false
+      room.roomId = (~~(Math.random()*1e8)).toString(16)
+      rooms[room.roomId] = room
+    }
+  }
+}
+
 
 ws.on('request', req => {
   const connection = req.accept('', req.origin)  // CREATE WS CONNECTION
-  connection.connectionId = connectionId
-  connectionId += 1
-  connections.push(connection)
+  connection.connectionId = (~~(Math.random()*1e8)).toString(16)
+  connection.isFree = true
+  connections[connection.connectionId] = connection
   console.log('=== CONNECTED № ' + connection.connectionId + ' ===')
   console.dir('CLIENT IP: ' + connection.remoteAddress)
+  createRoom()
 })
