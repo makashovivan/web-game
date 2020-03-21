@@ -1,8 +1,10 @@
+'use strict'
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 
-gameState = {
+let gameState = {
   playerFirst:{
     pos: {x: 10, y: 20},
     bullets: [],
@@ -16,13 +18,22 @@ gameState = {
 
 const socket = new WebSocket('ws://192.168.0.140:8000/') // INIT WS CONNECTION
 
+
+socket.onmessage = data => {
+  //console.log('data: ' + data.data)
+  //debugger
+  gameState = JSON.parse(data.data)
+}
+
+
 const onKeypress = (event) => {
   event.preventDefault()
   console.log(event.code)
+  socket.send(event.code)
 }
 document.addEventListener('keydown', (event) => {onKeypress(event)})
 
-const rerender = (gameState) => {
+const rerender = () => {
   ctx.clearRect(0,0,1300,500)
 
   ctx.fillStyle = "Green"
@@ -37,9 +48,9 @@ const rerender = (gameState) => {
     ctx.fillRect(bullet.x, bullet.y, 5, 5)
   })  
 
-  requestAnimationFrame(() => {rerender(gameState)})
+  requestAnimationFrame(() => {rerender()})
 }
 
 
-let requestID = requestAnimationFrame(() => {rerender(gameState)})
+let requestID = requestAnimationFrame(() => {rerender()})
 

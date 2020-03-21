@@ -17,32 +17,27 @@ class GameState {
       pos: new Pos(200, 20),
       bullets: [],
     }
-
-    this.gameTimer = setInterval(() => this.gameLoop(), 50)
-  }
-
-  startGame(){
-
+    setInterval(() => this.gameLoop(), 20)
   }
 
   
   gameLoop(){
     this.playerFirst.bullets.forEach((bullet, index, bullets) => {
-      if (bullet.x <= 520){bullet.x += 1}
+      if (bullet.x <= 520){bullet.x += 10}
       else {bullets.splice(index, 1)}
     })
     this.playerSecond.bullets.forEach((bullet, index, bullets) => {
-      if (bullet.x >= 0){bullet.x -= 1}
+      if (bullet.x >= 0){bullet.x -= 10}
       else {bullets.splice(index, 1)}
     })
-    console.log('keep going')
+    //console.log('keep going')
   }
 
 
   eventHandler(eventCode, player) {
     switch (eventCode){
       case 'Space':
-        this[player].bullets.push(this[player].pos) 
+        this[player].bullets.push({x: this[player].pos.x, y: this[player].pos.y}) 
         break
       case 'ArrowDown':
         this[player].pos.y += 10
