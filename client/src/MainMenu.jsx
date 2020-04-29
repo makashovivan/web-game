@@ -1,13 +1,15 @@
 import React from 'react';
-
+import {Link} from 'react-router-dom'
 
 const MainMenu = () => {
   return (
     <div>
+
       <input type="text"/>
-      <button>Search game</button>
-      <button>Create room</button>
-      <button>Join room</button>
+      <Link to = '/CreateRoom'><button>Create room</button></Link>
+      <Link to = '/JoinRoom'><button>Join room</button></Link>
+      <Link to = '/Game'><button>Search game</button></Link>
+      
     </div>
 
   )

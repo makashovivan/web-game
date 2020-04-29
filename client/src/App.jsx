@@ -1,19 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import MainMenu from './MainMenu'
-import CreateRoom from './CreateRoom'
-
+import { BrowserRouter } from 'react-router-dom'
+import { useRoutes } from './routes';
 
 const App = () => {
 
 
   return (
-    <div>
-      <MainMenu/>
-      <CreateRoom/>
-      {/* <SearchGame/>
-      <JoinRoom/>       */}
-    </div>
+    <BrowserRouter>
+      <div>
+      {useRoutes(false)}
+      </div>
+    </BrowserRouter>
   )
 }
 

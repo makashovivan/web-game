@@ -2,9 +2,8 @@
 const Room = require('./Room')
 const fs = require('fs')
 const path = require('path')
-const http = require('http')
 const EventEmitter = require('events')
-const Websocket = require('websocket').server
+
 const express = require('express')
 
 
@@ -15,6 +14,10 @@ const app = express()
 app.use('/', express.static(path.join(__dirname, '../../client/build')))
 
 // === ============ ===
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'))
+})
 
 app.listen(8000, () => {
   console.log('Listen port 8000')
