@@ -3,17 +3,33 @@ const Room = require('./Room')
 const fs = require('fs')
 const path = require('path')
 const EventEmitter = require('events')
-
 const express = require('express')
+const ws = require('express-ws')
 
 
 const app = express()
+ws(app)
 
-// === SERVE STATIC ===
 
-app.use('/', express.static(path.join(__dirname, '../../client/build')))
 
-// === ============ ===
+app.use('/', express.static(path.join(__dirname, '../../client/build')))  // SERVE STATIC 
+
+
+
+// === WS ENDPOINT ===
+
+app.ws('/ws', function (ws, req) {
+  console.log('WS CONNECTED')
+  setTimeout(() => {
+    ws.send("START_GAME")
+  }, 7000)
+  ws.on('close', () => {
+    console.log('WS CLOSED')
+  })
+})
+
+// === =========== ===
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'))
@@ -23,12 +39,6 @@ app.listen(8000, () => {
   console.log('Listen port 8000')
 })
 
-// === UPGRADE TO WS SERVER ===
-
-// const ws = new Websocket({
-//   httpServer: server,
-//   autoAcceptConnections: false
-// })
 
 
 // const connections = {} //  CONNECTIONS
