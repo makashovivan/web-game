@@ -12,17 +12,21 @@ ws(app)
 
 
 
-app.use('/', express.static(path.join(__dirname, '../../client/build')))  // SERVE STATIC 
-
+// app.use('/', express.static(path.join(__dirname, '../../client/build')))  // SERVE STATIC 
 
 
 // === WS ENDPOINT ===
 
 app.ws('/ws', function (ws, req) {
   console.log('WS CONNECTED')
-  setTimeout(() => {
+  setInterval(() => {
     ws.send("START_GAME")
-  }, 7000)
+  }, 5000)
+
+  ws.on('message', (msg) => {
+    console.dir(msg)
+  })
+
   ws.on('close', () => {
     console.log('WS CLOSED')
   })
@@ -31,9 +35,9 @@ app.ws('/ws', function (ws, req) {
 // === =========== ===
 
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'))
-})
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../../client/build', 'index.html'))
+// })
 
 app.listen(8000, () => {
   console.log('Listen port 8000')

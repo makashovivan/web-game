@@ -9,22 +9,27 @@ import Game from './Game'
 
 const App = () => {
 
+  const [socket, setSocket] = useState(null)
   const [gameAcces, setGameAcces] = useState(false)
 
-  const setAcces = (acces) => {
-    console.log("SETACCES TO " + acces.toString().toUpperCase())
-    setGameAcces(acces)
+  const closeSocket = () => {
+    if (socket) {
+      socket.close()
+      setSocket(null)
+      console.log('socket nulled')
+    }
   }
+
 
   return (
     <div>
       <div>{'Game Acces = ' + gameAcces.toString()}</div>
       <BrowserRouter>
           <Switch>
-            <Route exact path = '/' render={() => <MainMenu setGameAcces = {setAcces}/>}/>
+            <Route exact path = '/' render={() => <MainMenu setGameAcces = {setGameAcces} setSocket = {setSocket} closeSocket = {closeSocket}/>}/>
             <Route exact path = '/JoinRoom' component = {JoinRoom}/>
             <Route exact path = '/CreateRoom' component = {CreateRoom}/>
-            {gameAcces ? <Route exact path = '/Game' component = {Game}/> : null}
+            {gameAcces ? <Route exact path = '/Game' render={() => <Game socket = {socket}/>}/> : null}
             <Redirect to = '/'/>
           </Switch>
       </BrowserRouter>

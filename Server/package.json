@@ -2,15 +2,25 @@
   "name": "angel_game_test",
   "version": "1.0.0",
   "description": "test version of my first web game ",
-  "main": "Game.js",
+  "main": "./src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": ""
+    "start": "node ./src/server.js",
+    "server": "nodemon ./src/server.js",
+    "client": "npm start --prefix ../client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Ivan Makashov",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
     "express-ws": "^4.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.3"
   }
 }
+
+
+
+
