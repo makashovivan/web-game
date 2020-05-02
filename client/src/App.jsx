@@ -12,21 +12,13 @@ const App = () => {
   const [socket, setSocket] = useState(null)
   const [gameAcces, setGameAcces] = useState(false)
 
-  const closeSocket = () => {
-    if (socket) {
-      socket.close()
-      setSocket(null)
-      console.log('socket nulled')
-    }
-  }
-
 
   return (
     <div>
       <div>{'Game Acces = ' + gameAcces.toString()}</div>
       <BrowserRouter>
           <Switch>
-            <Route exact path = '/' render={() => <MainMenu setGameAcces = {setGameAcces} setSocket = {setSocket} closeSocket = {closeSocket}/>}/>
+            <Route exact path = '/' render={() => <MainMenu setGameAcces = {setGameAcces} setSocket = {setSocket}/>}/>
             <Route exact path = '/JoinRoom' component = {JoinRoom}/>
             <Route exact path = '/CreateRoom' component = {CreateRoom}/>
             {gameAcces ? <Route exact path = '/Game' render={() => <Game socket = {socket}/>}/> : null}

@@ -10,7 +10,12 @@ const Game = ({socket}) => {
     const canvas =  canvasRef.current
     ctx = canvas.getContext('2d')
     const game = new GameController(socket, ctx)
-    game.reDraw()
+    game.initDrawing()
+    return () => {
+      console.log("GAMEUNMOUNT")
+      socket.close()
+      game.stopDrawing()
+    }
   },[])
 
 
