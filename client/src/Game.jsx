@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import GameController  from './GameController'
 
-const Game = ({socket}) => {
+const Game = ({ socket, setGameAcces }) => {
   
   const canvasRef = React.useRef(null)
   let ctx
@@ -15,6 +15,7 @@ const Game = ({socket}) => {
       console.log("GAMEUNMOUNT")
       socket.close()
       game.stopDrawing()
+      setGameAcces(false)
     }
   },[])
 

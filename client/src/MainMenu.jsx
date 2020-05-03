@@ -1,22 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom'
-import GameSearching from './GameSearching'
-
-const MainMenu = ({setGameAcces, setSocket}) => {
-
-  const [gameSearching, setGameSearching] = useState(false)
 
 
+const MainMenu = ({setGameSearching}) => {
 
-  useEffect(() => {
-    setGameAcces(false)
-  },[])
 
   return (
     <div>
-      {gameSearching ? <GameSearching setGameAcces = {setGameAcces}
-                                      setSocket = {setSocket} 
-                                      setGameSearching = {setGameSearching}/> : null}
       <input type="text"/>
       <Link to = '/CreateRoom'><button>Create room</button></Link>
       <Link to = '/JoinRoom'><button>Join room</button></Link>
