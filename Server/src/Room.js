@@ -1,76 +1,73 @@
 'use strict'
 const GameState = require('./GameState')
 
-class Room{
-  constructor(player1Connection, player2Connection, emitter){
+class Room {
 
-    this.emitter = emitter
+  constructor(player1Connection, player2Connection) {
 
-    this.player1 = {
-      connection: player1Connection,
-      gameStatus: 'playerFirst'
+    this.gameState = new GameState()                   // ROOMS GAMESTATE
+
+    this.players = {                                   // PLAYERS IN ROOM
+      [player1Connection.connectionId] : {
+        id : player1Connection.connectionId,
+        connection : player1Connection,
+        gameStatus : 'playerFirst',
+        sendingInterval : null
+      },
+      [player2Connection.connectionId] : {
+        id : player2Connection.connectionId,
+        connection : player2Connection,
+        gameStatus : 'playerSecond',
+        sendingInterval : null
+      },
     }
-    this.player2 = {
-      connection: player2Connection,
-      gameStatus: 'playerSecond'
-    }
-    this.gameState = new GameState()
 
-    this.initDisconnectHandler(this.player1)
-    this.initDisconnectHandler(this.player2)
-    this.initMessageHandler(this.player1)
-    this.initMessageHandler(this.player2)
-    this.initStream(this.player1.connection)
-    this.initStream(this.player2.connection)
+
+    for (let key in this.players) {                    // INIT HANDLERS AND STREAMS
+      this.initDisconnectHandler(this.players[key])
+      this.initMessageHandler(this.players[key])
+      this.initStream(this.players[key])
+    }
+
   }
 
-  initStream(connection){
-    let sendingInterval = setInterval(() => {
-      connection.send(JSON.stringify(this.gameState))
+
+  initStream(player){
+    player.sendingInterval = setInterval(() => {
+      player.connection.send(JSON.stringify({type: "GAME_STATE", payload: this.gameState}))
     }, 20)
+  }
+
+  stopStreams(){
+    for (let key in this.players) {
+      clearTimeout(this.players[key].sendingInterval)
+    }
+
   }
 
 
   initMessageHandler(player){
     const connection = player.connection
-    connection.on('message', message => {
+    connection.on('message', msg => {
       //console.log('newMessage: ' + message.utf8Data)
-      this.gameState.eventHandler(message.utf8Data, player.gameStatus)
+      message = JSON.parse(message.utf8Data)
+      this.gameState.eventHandler(message.payload, player.gameStatus)      // КОРРЕКТИРОВАТЬ ( if (type == ''))
     })
   }
 
   initDisconnectHandler(player){
     const connection = player.connection
     connection.on('close', (reasonCode, description) => {
-
       console.log('Disconnected ' + connection.connectionId)
-      console.dir({reasonCode, description})
-      this.emitter.emit('delete', {deleteConnection: connection.connectionId,
-                                   changeConnection: this.getChangeConnection(connection.connectionId),
-                                   room: this.roomId})
-      // this.player1.connection.removeListener('close',() => {'LISTENER REMOVED'})
-      // this.player2.connection.removeListener('close',() => {'LISTENER REMOVED'})                           
-      this.player1.connection = null
-      this.player2.connection = null
-      delete this.player1
-      delete this.player2                          
-    
+      console.dir({reasonCode, description}) 
+      this.stopStreams()                                                   // STOP STREAM
+      for (key in this.players) {                                                         
+        if (key !== player.id) {
+          this.players[key].connection.send(JSON.stringify({type: "OPPONENT_LEAVE", payload: ''})) // SEND OPPONENT_LEAVE EVENT
+        }
+      }
     })
-
   }
-
-
-
-  getChangeConnection(id){
-    if (id != this.player1.connection.connectionId){
-      return this.player1.connection.connectionId
-    }
-    return this.player2.connection.connectionId
-  }
-
-
-
-
 
 }
 
