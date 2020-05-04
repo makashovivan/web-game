@@ -26,7 +26,6 @@ class RoomManager {
 
   createRoom() {
     let ids = Object.keys( this.connections )
-    console.dir('IDS_LENGTH: ' + ids.length)
     if (ids.length === 2) {
       
         const room = new Room(this.connections[ids[0]], this.connections[ids[1]])

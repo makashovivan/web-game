@@ -1,16 +1,11 @@
 
 
 export default class GameController {
-  constructor(socket, ctx){
+  constructor(socket, ctx, onOpponentLeave){
 
     this.requestID = null
 
     this.socket = socket
-
-    this.socket.onmessage = msg => {
-      //....
-      //gameState = JSON.parse(data.data)
-    }
 
     this.ctx = ctx
 
@@ -24,6 +19,19 @@ export default class GameController {
         bullets: [],
       },
     }
+
+    this.socket.onmessage = msg => {
+      const message = JSON.parse(msg.data)
+      switch (message.type) {
+        case "GAME_STATE":
+          this.gameState = message.payload
+          break
+        case "OPPONENT_LEAVE":
+          onOpponentLeave()
+          break 
+        }
+    }
+
 
   }
 
@@ -56,6 +64,12 @@ export default class GameController {
   stopDrawing() {
     cancelAnimationFrame(this.requestID)
 
+  }
+
+  onKeyPress(event) {     
+    event.preventDefault()
+    console.log(event.code)
+    this.socket.send(JSON.stringify({type: '', payload: event.code}))
   }
 
 }

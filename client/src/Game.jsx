@@ -1,18 +1,31 @@
 import React, {useEffect} from 'react';
 import GameController  from './GameController'
+import { useHistory }  from 'react-router-dom'
 
 const Game = ({ socket, setGameAcces }) => {
-  
+
+  const history = useHistory()
   const canvasRef = React.useRef(null)
   let ctx
+
+  const onOpponentLeave = () => {
+    console.log("Opponent Leaved")
+    history.push('/')
+    // OPPONENT LEAVED ERROR
+  }
 
   useEffect(() => {
     const canvas =  canvasRef.current
     ctx = canvas.getContext('2d')
-    const game = new GameController(socket, ctx)
+    const game = new GameController(socket, ctx, onOpponentLeave)
+    const keyboardHandler = (event) => {
+      game.onKeyPress(event)
+    }
+    document.addEventListener('keydown', keyboardHandler)
     game.initDrawing()
     return () => {
       console.log("GAMEUNMOUNT")
+      document.removeEventListener('keydown',  keyboardHandler)
       socket.close()
       game.stopDrawing()
       setGameAcces(false)

@@ -49,8 +49,7 @@ class Room {
   initMessageHandler(player){
     const connection = player.connection
     connection.on('message', msg => {
-      //console.log('newMessage: ' + message.utf8Data)
-      message = JSON.parse(message.utf8Data)
+      const message = JSON.parse(msg)
       this.gameState.eventHandler(message.payload, player.gameStatus)      // КОРРЕКТИРОВАТЬ ( if (type == ''))
     })
   }
@@ -59,12 +58,14 @@ class Room {
     const connection = player.connection
     connection.on('close', (reasonCode, description) => {
       console.log('Disconnected ' + connection.connectionId)
-      console.dir({reasonCode, description}) 
-      this.stopStreams()                                                   // STOP STREAM
-      for (key in this.players) {                                                         
-        if (key !== player.id) {
+      console.dir({reasonCode, description})
+      for (let key in this.players) {                                                         
+        if (key !== player.id && this.players[key].connection !== null) {
+          this.stopStreams() 
           this.players[key].connection.send(JSON.stringify({type: "OPPONENT_LEAVE", payload: ''})) // SEND OPPONENT_LEAVE EVENT
+          this.players[key].connection = null
         }
+      this.players[key].connection = null
       }
     })
   }
