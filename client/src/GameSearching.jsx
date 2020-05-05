@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import { useHistory }  from 'react-router-dom'
+import ModalWindow from './ModalWindow'
 
 
 
-const GameSearching = ({setGameAcces, setSocket, setGameSearching}) => {
+const GameSearching = ({setGameAcces, setSocket, setGameSearching, history, closeConnection}) => {
 
-  const history = useHistory()
-  let socket
+  //let socket
 
-  const goToGame = () => {
+  const goToGame = (socket) => {
     setGameAcces(true)
     setGameSearching(false)
     setSocket(socket)
@@ -16,19 +15,25 @@ const GameSearching = ({setGameAcces, setSocket, setGameSearching}) => {
   }
 
   const goToMenu = () => {
-    socket.close()
+    closeConnection()
     setSocket(null)
     setGameAcces(false)
     setGameSearching(false)
   }
   
   const startSearching = () => {
-    socket = new WebSocket('ws://localhost:8000/ws') // INIT WS CONNECTION
-    socket.onmessage = msg => {                      // MESSAGE HANDLING IN SEARCHING STAGE
+    const socket = new WebSocket('ws://localhost:8000/ws')              // INIT WS CONNECTION
+    setSocket(socket)
+
+    socket.onopen = () => {                                             // SET CONNECTION MODE
+      socket.send(JSON.stringify({type: "SEARCH_GAME", payload: ''}))
+    }
+
+    socket.onmessage = msg => {                                         // MESSAGE HANDLING IN SEARCHING STAGE
       const message = JSON.parse(msg.data)
       switch (message.type) {
         case "START_GAME" :
-          goToGame()
+          goToGame(socket)
           break
       }
   
@@ -44,7 +49,8 @@ const GameSearching = ({setGameAcces, setSocket, setGameSearching}) => {
   return (
     <div>
       <div> GameSearching </div>
-      <button onClick = {goToMenu}>Stop searching</button>
+      <ModalWindow type = {"SEARCHING"} text = {"Searching for free player"}  onExit = {goToMenu}/>
+      {/* <button onClick = {goToMenu}>Stop searching</button> */}
     </div>
 
   )

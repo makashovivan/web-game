@@ -68,7 +68,6 @@ export default class GameController {
 
   onKeyPress(event) {     
     event.preventDefault()
-    console.log(event.code)
     this.socket.send(JSON.stringify({type: '', payload: event.code}))
   }
 

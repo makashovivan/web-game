@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import GameController  from './GameController'
 import { useHistory }  from 'react-router-dom'
 
-const Game = ({ socket, setGameAcces }) => {
+const Game = ({ socket, setGameAcces, setModalWindow }) => {
 
   const history = useHistory()
   const canvasRef = React.useRef(null)
@@ -11,6 +11,7 @@ const Game = ({ socket, setGameAcces }) => {
   const onOpponentLeave = () => {
     console.log("Opponent Leaved")
     history.push('/')
+    setModalWindow({rendered : true, type: "ERROR", text: "OPPONENT LEAVED THE GAME"})
     // OPPONENT LEAVED ERROR
   }
 
