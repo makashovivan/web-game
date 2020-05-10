@@ -3,21 +3,17 @@ const fs = require('fs')
 const path = require('path')
 const express = require('express')
 const ws = require('express-ws')
-const RoomManager = require('./RoomManager')
 
 const app = express()
 ws(app)
 
-const roomManager = new RoomManager()  // SINGLETON
-
 
 // === WS ENDPOINT ===
 
-app.ws('/ws', (connection, req) => {
 
-  roomManager.addConnection(connection)
-
-})
+app.use('/ws/SearchRoom', require('./routes/SearchRoom'))
+app.use('/ws/CreateRoom', require('./routes/CreateRoom').router)
+app.use('/ws/JoinRoom', require('./routes/JoinRoom'))
 
 // === =========== ===
 app.listen(8000, () => {
