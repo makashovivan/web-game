@@ -1,56 +1,43 @@
 import React, { useEffect } from 'react';
-import ModalWindow from './ModalWindow'
+import {goToGameActionCreator, goToMenuActionCreator} from './redux/reducers/rootReducer'
 
 
 
-const GameSearching = ({setGameAcces, setSocket, setGameSearching, history, closeConnection}) => {
 
-  //let socket
+const GameSearching = ({history, dispatch, state}) => {
 
-  const goToGame = (socket) => {
-    setGameAcces(true)
-    setGameSearching(false)
-    setSocket(socket)
+
+  const goToGame = () => {
+    dispatch(goToGameActionCreator())
     history.push('/Game')
   }
 
   const goToMenu = () => {
-    closeConnection()
-    setSocket(null)
-    setGameAcces(false)
-    setGameSearching(false)
+    dispatch(goToMenuActionCreator())
   }
   
-  const startSearching = () => {
-    const socket = new WebSocket('ws://localhost:8000/ws')              // INIT WS CONNECTION
-    setSocket(socket)
 
-    socket.onopen = () => {                                             // SET CONNECTION MODE
-      socket.send(JSON.stringify({type: "SEARCH_GAME", payload: ''}))
-    }
+  useEffect(() => {
+    // state.socket.onopen = () => {
+    //   state.socket.send(JSON.stringify({type: "SEARCH_GAME", payload: ''}))
+    // }
 
-    socket.onmessage = msg => {                                         // MESSAGE HANDLING IN SEARCHING STAGE
+    state.socket.onmessage = msg => {
       const message = JSON.parse(msg.data)
       switch (message.type) {
         case "START_GAME" :
-          goToGame(socket)
+          goToGame(state.socket)
           break
       }
-  
+
     }
-  }
-
-
-  useEffect(() => {
-    startSearching()
   },[])
 
 
   return (
     <div>
-      <div> GameSearching </div>
-      <ModalWindow type = {"SEARCHING"} text = {"Searching for free player"}  onExit = {goToMenu}/>
-      {/* <button onClick = {goToMenu}>Stop searching</button> */}
+      <div> GAMESEARCHING </div>
+      <button onClick = {goToMenu}>Stop searching</button>
     </div>
 
   )

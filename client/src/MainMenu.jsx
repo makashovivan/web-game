@@ -1,16 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
+import { startSearchingActionCreator, startCreatingActionCreator } from './redux/reducers/rootReducer'
 
 
-const MainMenu = ({setGameSearching}) => {
+const MainMenu = ({dispatch}) => {
 
 
   return (
     <div>
       <input type="text"/>
-      <Link to = '/CreateRoom'><button>Create room</button></Link>
+      <button onClick = {() => dispatch(startSearchingActionCreator()) }>Search game</button>
+      <button onClick = {() => dispatch(startCreatingActionCreator()) }>Create room</button>
       <Link to = '/JoinRoom'><button>Join room</button></Link>
-      <button onClick = {() => setGameSearching(true) }>Search game</button>
+
       
     </div>
 

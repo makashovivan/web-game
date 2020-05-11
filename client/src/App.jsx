@@ -1,47 +1,67 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import { Route, Redirect, Switch, useHistory } from 'react-router-dom'
 import MainMenu from './MainMenu'
 import JoinRoom from './JoinRoom'
-import CreateRoom from './CreateRoom'
 import Game from './Game'
 import GameSearching from './GameSearching'
-import ModalWindow from './ModalWindow'
+import GameCreating from './GameCreating'
+import Error from './Error'
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 
-const App = () => {
+const App = ({state, store}) => {
 
-  const history = useHistory()
 
-  const [socket, setSocket] = useState(null)
-  const [gameAcces, setGameAcces] = useState(false)
-  const [gameSearching, setGameSearching] = useState(false)
-  const [modalWindow, setModalWindow] = useState({rendered: false})
+  console.log(state)
 
-  const closeConnection = () => {
-    if (socket) {socket.close()}
-  }
+  let history = useHistory()
 
 
   return (
     <div>
-    {modalWindow.rendered ? <ModalWindow type = {modalWindow.type}
-     text = {modalWindow.text} onExit = {() => setModalWindow({rendered: false})}/>
-    : null}
-    {gameSearching ? <GameSearching setGameAcces = {setGameAcces}
-                      setSocket = {setSocket} setGameSearching = {setGameSearching}
-                      history = {history} closeConnection = {closeConnection}/> 
-    : null}
-      <div>{'Game Acces = ' + gameAcces.toString()}</div> 
-          <Switch>
-            <Route exact path = '/' render={() => <MainMenu setGameSearching = {setGameSearching}/>}/>
-            <Route exact path = '/JoinRoom' component = {JoinRoom}/>
-            <Route exact path = '/CreateRoom' component = {CreateRoom}/>
-            {gameAcces ? <Route exact path = '/Game' render={() => <Game socket = {socket} setGameAcces = {setGameAcces}
-                                                                         setModalWindow = {setModalWindow}/>}/>
-             : null}
-            <Redirect to = '/'/>
-          </Switch>
+      <CSSTransition
+          in={state.error.render}
+          timeout={800}
+          classNames="alert"
+          unmountOnExit
+          >
+            <Error dispatch = {store.dispatch} state = {state}/>
+
+      </CSSTransition>
+      <CSSTransition
+          in={state.gameSearching}
+          timeout={800}
+          classNames="alert"
+          unmountOnExit
+          >
+        <GameSearching 
+            history = {history} 
+            dispatch = {store.dispatch}
+            state = {state}/>  
+      </CSSTransition>
+      <CSSTransition
+          in={state.gameCreating}
+          timeout={800}
+          classNames="alert"
+          unmountOnExit
+          >
+      <GameCreating history = {history} 
+                    dispatch = {store.dispatch}
+                    state = {state}/> 
+      </CSSTransition>
+      <div>{'Game Acces = ' + state.gameAcces.toString()}</div> 
+      <Switch>
+        <Route exact path = '/' render={() => <MainMenu dispatch = {store.dispatch}/>}/>
+        <Route exact path = '/JoinRoom'  render={() => <JoinRoom history = {history} 
+                                                                 dispatch = {store.dispatch}
+                                                                 state = {state}/>}/>
+        {state.gameAcces ? <Route exact path = '/Game' render={() => <Game dispatch = {store.dispatch}
+                                                                           state = {state}/>}/>
+                         : null}
+
+        <Redirect to = '/'/>
+      </Switch>
     </div>
   )
 }

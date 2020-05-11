@@ -1,8 +1,10 @@
 import React, {useEffect} from 'react';
 import GameController  from './GameController'
-import { useHistory }  from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+import { opponentLeavedActionCreator } from './redux/reducers/errorsReducer'
+import { gameUnmountActionCreator } from './redux/reducers/rootReducer'
 
-const Game = ({ socket, setGameAcces, setModalWindow }) => {
+  const Game = ({ dispatch, state }) => {
 
   const history = useHistory()
   const canvasRef = React.useRef(null)
@@ -11,14 +13,13 @@ const Game = ({ socket, setGameAcces, setModalWindow }) => {
   const onOpponentLeave = () => {
     console.log("Opponent Leaved")
     history.push('/')
-    setModalWindow({rendered : true, type: "ERROR", text: "OPPONENT LEAVED THE GAME"})
-    // OPPONENT LEAVED ERROR
+    dispatch(opponentLeavedActionCreator())
   }
 
   useEffect(() => {
     const canvas =  canvasRef.current
     ctx = canvas.getContext('2d')
-    const game = new GameController(socket, ctx, onOpponentLeave)
+    const game = new GameController(state.socket, ctx, onOpponentLeave)
     const keyboardHandler = (event) => {
       game.onKeyPress(event)
     }
@@ -27,9 +28,8 @@ const Game = ({ socket, setGameAcces, setModalWindow }) => {
     return () => {
       console.log("GAMEUNMOUNT")
       document.removeEventListener('keydown',  keyboardHandler)
-      socket.close()
       game.stopDrawing()
-      setGameAcces(false)
+      dispatch(gameUnmountActionCreator())
     }
   },[])
 
