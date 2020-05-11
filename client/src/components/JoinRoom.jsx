@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {goToGameActionCreator, joinRequestActionCreator, changeRoomCodeActionCreator} from './redux/reducers/rootReducer'
+import {goToGameActionCreator, joinRequestActionCreator, changeRoomCodeActionCreator} from '../redux/reducers/rootReducer'
 
 const JoinRoom = ({history, dispatch, state}) => {
 

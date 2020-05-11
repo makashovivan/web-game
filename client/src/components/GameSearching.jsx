@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {goToGameActionCreator, goToMenuActionCreator} from './redux/reducers/rootReducer'
+import {goToGameActionCreator, goToMenuActionCreator} from '../redux/reducers/rootReducer'
 
 
 

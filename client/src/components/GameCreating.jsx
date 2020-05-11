@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {goToGameActionCreator, goToMenuActionCreator} from './redux/reducers/rootReducer'
+import {goToGameActionCreator, goToMenuActionCreator} from '../redux/reducers/rootReducer'
 
 const GameCreating = ({history, dispatch, state}) => {
 

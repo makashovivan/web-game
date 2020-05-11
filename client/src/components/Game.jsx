@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import GameController  from './GameController'
 import { useHistory } from 'react-router-dom';
-import { opponentLeavedActionCreator } from './redux/reducers/errorsReducer'
-import { gameUnmountActionCreator } from './redux/reducers/rootReducer'
+import { opponentLeavedActionCreator } from '../redux/reducers/errorsReducer'
+import { gameUnmountActionCreator } from '../redux/reducers/rootReducer'
 
   const Game = ({ dispatch, state }) => {
 

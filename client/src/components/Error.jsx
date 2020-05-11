@@ -1,5 +1,5 @@
 import React from 'react';
-import {closeErrorActionCreator} from './redux/reducers/errorsReducer'
+import {closeErrorActionCreator} from '../redux/reducers/errorsReducer'
 
 const Error = ({dispatch, state}) => {
 

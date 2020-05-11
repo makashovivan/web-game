@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import { startSearchingActionCreator, startCreatingActionCreator } from './redux/reducers/rootReducer'
+import { startSearchingActionCreator, startCreatingActionCreator } from '../redux/reducers/rootReducer'
 
 
 const MainMenu = ({dispatch}) => {
