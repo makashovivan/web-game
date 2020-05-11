@@ -5,6 +5,8 @@ class Room {
 
   constructor(player1Connection, player2Connection) {
 
+    
+
     this.gameState = new GameState()                   // ROOMS GAMESTATE
 
     this.players = {                                   // PLAYERS IN ROOM
@@ -23,18 +25,29 @@ class Room {
     }
 
 
+
     for (let key in this.players) {                    // INIT HANDLERS AND STREAMS
+      this.players[key].connection.send(JSON.stringify({type : "START_GAME"}))
       this.initDisconnectHandler(this.players[key])
       this.initMessageHandler(this.players[key])
       this.initStream(this.players[key])
     }
+
+    console.log('     ROOM CREATED ' + player1Connection.connectionId + ' ' + player2Connection.connectionId)
 
   }
 
 
   initStream(player){
     player.sendingInterval = setInterval(() => {
-      player.connection.send(JSON.stringify({type: "GAME_STATE", payload: this.gameState}))
+
+      try {
+        player.connection.send(JSON.stringify({type: "GAME_STATE", payload: this.gameState}))
+      }
+      catch(e) {
+        console.log('error')
+      }
+
     }, 20)
   }
 
@@ -62,7 +75,15 @@ class Room {
       for (let key in this.players) {                                                         
         if (key !== player.id && this.players[key].connection !== null) {
           this.stopStreams() 
-          this.players[key].connection.send(JSON.stringify({type: "OPPONENT_LEAVE", payload: ''})) // SEND OPPONENT_LEAVE EVENT
+
+          try {
+            this.players[key].connection.send(JSON.stringify({type: "OPPONENT_LEAVE", payload: ''})) // SEND OPPONENT_LEAVE EVENT
+          }
+          catch(e) {
+            console.log('error')
+          }
+
+
           this.players[key].connection = null
         }
       this.players[key].connection = null
