@@ -7,9 +7,7 @@ const ws = require('express-ws')
 const app = express()
 ws(app)
 
-
 // === WS ENDPOINT ===
-
 
 app.use('/ws/SearchRoom', require('./routes/SearchRoom'))
 app.use('/ws/CreateRoom', require('./routes/CreateRoom').router)

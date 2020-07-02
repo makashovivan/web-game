@@ -2,10 +2,7 @@ const {Router} = require('express')
 const router = Router()
 const Room = require('../Room')
 
-
 const createConnections = require('./CreateRoom').createConnections
-
-
 
 const manageJoinConnection = (connection, code) => {
   let ids = Object.keys( createConnections )
@@ -18,14 +15,12 @@ const manageJoinConnection = (connection, code) => {
   })
 }
 
-
-
 router.ws('/', (connection, res) => {
   console.log("NEW JOINER ")
   connection.on('message', (msg) => {
     const message = JSON.parse(msg)
     console.dir("ROOMJOINER MESSAGE: " + msg)
-    if (message.type == 'ROOM_CODE') manageJoinConnection(connection, message.payload)
+    (message.type == 'ROOM_CODE') && manageJoinConnection(connection, message.payload)
   })
 })
 

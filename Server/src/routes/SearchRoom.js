@@ -2,9 +2,7 @@ const {Router} = require('express')
 const router = Router()
 const Room = require('../Room')
 
-
 let SearchingConnections = {}
-
 
 const checkSearchingConnections = () => {
   let ids = Object.keys( SearchingConnections )
@@ -12,9 +10,7 @@ const checkSearchingConnections = () => {
   return false
 }
 
-
 const manageSearchingConnection = connection => {
-
   connection.connectionId = (~~(Math.random()*1e8)).toString(16)                // CREATE ID 
   SearchingConnections[connection.connectionId] = connection                        // PUSH TO CONNECTIONS
   console.log('=== CONNECTED SEARCHER № ' + connection.connectionId + ' ===')
@@ -32,8 +28,6 @@ const manageSearchingConnection = connection => {
     }
   })
 }
-
-
 
 router.ws('/', (connection, res) => {
   manageSearchingConnection(connection)
