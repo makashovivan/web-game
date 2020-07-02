@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect} from 'react'
+import { connect } from 'react-redux' 
 import GameController  from './GameController'
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom'
 import { opponentLeavedActionCreator } from '../redux/reducers/errorsReducer'
 import { gameUnmountActionCreator } from '../redux/reducers/rootReducer'
 
-  const Game = ({ dispatch, state }) => {
+  const Game = (props) => {
 
   const history = useHistory()
   const canvasRef = React.useRef(null)
@@ -13,13 +14,13 @@ import { gameUnmountActionCreator } from '../redux/reducers/rootReducer'
   const onOpponentLeave = () => {
     console.log("Opponent Leaved")
     history.push('/')
-    dispatch(opponentLeavedActionCreator())
+    props.opponentLeaved()
   }
 
   useEffect(() => {
     const canvas =  canvasRef.current
     ctx = canvas.getContext('2d')
-    const game = new GameController(state.socket, ctx, onOpponentLeave)
+    const game = new GameController(props.socket, ctx, onOpponentLeave)
     const keyboardHandler = (event) => {
       game.onKeyPress(event)
     }
@@ -29,11 +30,9 @@ import { gameUnmountActionCreator } from '../redux/reducers/rootReducer'
       console.log("GAMEUNMOUNT")
       document.removeEventListener('keydown',  keyboardHandler)
       game.stopDrawing()
-      dispatch(gameUnmountActionCreator())
+      props.gameUnmount()
     }
   },[])
-
-
 
   return (
     <div>
@@ -43,8 +42,18 @@ import { gameUnmountActionCreator } from '../redux/reducers/rootReducer'
 							tabIndex={1}>
       </canvas>
     </div>
-
   )
 }
 
-export default Game;
+const mapStateToProps = state => {
+  return {
+    socket: state.socket, 
+  }
+}
+
+const mapDispatchToProps = {
+  opponentLeaved: opponentLeavedActionCreator, 
+  gameUnmount: gameUnmountActionCreator, 
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game)

@@ -1,49 +1,52 @@
-import React, {useState, useEffect} from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux' 
 import {goToGameActionCreator, joinRequestActionCreator, changeRoomCodeActionCreator} from '../redux/reducers/rootReducer'
 
-const JoinRoom = ({history, dispatch, state}) => {
+const JoinRoom = (props) => {
 
   const roomCodeArea = React.createRef()
 
-
   const goToGame = () => {
-    dispatch(goToGameActionCreator())
-    history.push('/Game')
+    props.goToGame()
+    props.history.push('/Game')
   }
 
   const sendRoomCode = () => {
-    state.socket.send(JSON.stringify({type: 'ROOM_CODE', payload: state.roomCode}))
+    props.socket.send(JSON.stringify({type: 'ROOM_CODE', payload: props.roomCode}))
   }
 
-
-
   useEffect(() => {
-
-    dispatch(joinRequestActionCreator())
-
-    state.socket.onmessage = msg => {
+    props.joinRequest()
+    props.socket.onmessage = msg => {
       const message = JSON.parse(msg.data)
-
       switch (message.type) {
         case "START_GAME" :
           goToGame()
           break
       }
-  
     }
   },[])
-
-
-
 
   return (
     <div>
       <div>TYPE ROOM CODE HERE</div>
-      <input ref = {roomCodeArea} type="text" value = {state.roomCode} onChange = {() => dispatch(changeRoomCodeActionCreator(roomCodeArea.current.value))}></input>
+      <input ref = {roomCodeArea} type="text" value = {props.roomCode} onChange = {() => props.changeRoomCode(roomCodeArea.current.value)}></input>
       <button onClick = {() => sendRoomCode()}>JoinRoom</button>
     </div>
-
   )
 }
 
-export default JoinRoom;
+const mapStateToProps = state => {
+  return {
+    socket: state.socket, 
+    roomCode: state.roomCode,
+  }
+}
+
+const mapDispatchToProps = {
+  goToGame: goToGameActionCreator, 
+  joinRequest: joinRequestActionCreator,
+  changeRoomCode: changeRoomCodeActionCreator,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(JoinRoom)

@@ -1,17 +1,25 @@
-import React from 'react';
+import React from 'react'
+import { connect } from 'react-redux' 
 import {closeErrorActionCreator} from '../redux/reducers/errorsReducer'
 
-const Error = ({dispatch, state}) => {
-
-
+const Error = (props) => {
   return (
     <div>
-      <div>{state.error.type}</div>
-      <div>{state.error.text}</div>
-      <button onClick = {() => dispatch(closeErrorActionCreator())}>close</button>
+      <div>{props.error.type}</div>
+      <div>{props.error.text}</div>
+      <button onClick = {() => props.closeError()}>close</button>
     </div>
-
   )
 }
 
-export default Error;
+const mapStateToProps = state => {
+  return {
+    error: state.error, 
+  }
+}
+
+const mapDispatchToProps = {
+  closeError: closeErrorActionCreator,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Error)

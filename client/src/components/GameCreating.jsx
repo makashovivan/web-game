@@ -1,46 +1,55 @@
-import React, {useEffect, useState} from 'react';
-import {goToGameActionCreator, goToMenuActionCreator} from '../redux/reducers/rootReducer'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux' 
+import { goToGameActionCreator, goToMenuActionCreator } from '../redux/reducers/rootReducer'
 
-const GameCreating = ({history, dispatch, state}) => {
+const GameCreating = (props) => {
 
-  const goToGame = () => {
-    dispatch(goToGameActionCreator())
-    history.push('/Game')
+  const redirectToGame = () => {
+    props.goToGame()
+    props.history.push('/Game')
   }
 
-  const goToMenu = () => {
-    dispatch(goToMenuActionCreator())
+  const redirectToMenu = () => {
+    props.goToMenu()
   }
 
   const startCreating = () => {
-
-    state.socket.onopen = () => {                                          
-      state.socket.send(JSON.stringify({type: 'ROOM_CODE', payload: state.roomCode }))
+    props.socket.onopen = () => {                                          
+      props.socket.send(JSON.stringify({type: 'ROOM_CODE', payload: props.roomCode }))
     }
-
-    state.socket.onmessage = msg => {
+    props.socket.onmessage = msg => {
       const message = JSON.parse(msg.data)
       switch (message.type) {
         case "START_GAME" :
-          goToGame()
+          redirectToGame()
           break
       }
-  
     }
   }
 
   useEffect(() => {
     startCreating()
   },[])
-
+  
   return (
     <div>
       <div>GAMECREATING</div>
-      <div>{state.roomCode}</div>
-      <button onClick = {goToMenu}>Stop Creating</button>
+      <div>{props.roomCode}</div>
+      <button onClick = {redirectToMenu}>Stop Creating</button>
     </div>
-
   )
 }
 
-export default GameCreating;
+const mapStateToProps = state => {
+  return {
+    socket: state.socket,
+    roomCode: state.roomcode,
+  }
+}
+
+const mapDispatchToProps = {
+  goToGame: goToGameActionCreator, 
+  goToMenu: goToMenuActionCreator, 
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameCreating)

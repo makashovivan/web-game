@@ -1,46 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux' 
 import {goToGameActionCreator, goToMenuActionCreator} from '../redux/reducers/rootReducer'
 
+const GameSearching = (props) => {
 
-
-
-const GameSearching = ({history, dispatch, state}) => {
-
-
-  const goToGame = () => {
-    dispatch(goToGameActionCreator())
-    history.push('/Game')
+  const redirectToGame = () => {
+    props.goToGame()
+    props.history.push('/Game')
   }
 
-  const goToMenu = () => {
-    dispatch(goToMenuActionCreator())
+  const redirectToMenu = () => {
+    props.goToMenu()
   }
   
-
   useEffect(() => {
-    // state.socket.onopen = () => {
-    //   state.socket.send(JSON.stringify({type: "SEARCH_GAME", payload: ''}))
-    // }
-
-    state.socket.onmessage = msg => {
+    props.socket.onmessage = msg => {
       const message = JSON.parse(msg.data)
       switch (message.type) {
         case "START_GAME" :
-          goToGame(state.socket)
+          redirectToGame(props.socket)
           break
       }
-
     }
   },[])
-
 
   return (
     <div>
       <div> GAMESEARCHING </div>
-      <button onClick = {goToMenu}>Stop searching</button>
+      <button onClick = {redirectToMenu}>Stop searching</button>
     </div>
-
   )
 }
 
-export default GameSearching;
+const mapStateToProps = state => {
+  return {
+    socket: state.socket, 
+  }
+}
+
+const mapDispatchToProps = {
+  goToGame: goToGameActionCreator, 
+  goToMenu: goToMenuActionCreator, 
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameSearching)
