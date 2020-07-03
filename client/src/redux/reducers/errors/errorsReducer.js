@@ -1,5 +1,5 @@
-const OPPONENT_LEAVED_ERROR = 'OPPONENT_LEAVED_ERROR'
-const CLOSE_ERROR = 'CLOSE_ERROR'
+export const OPPONENT_LEAVED_ERROR = 'OPPONENT_LEAVED_ERROR'
+export const CLOSE_ERROR = 'CLOSE_ERROR'
 
 let initialState = {
   render: false,

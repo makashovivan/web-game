@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux' 
-import {goToGameActionCreator, goToMenuActionCreator} from '../redux/reducers/rootReducer'
+import {goToGameActionCreator, goToMenuActionCreator} from '../redux/reducers/root/actions'
 
 const GameSearching = (props) => {
 

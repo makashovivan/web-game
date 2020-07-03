@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux' 
-import {closeErrorActionCreator} from '../redux/reducers/errorsReducer'
+import {closeErrorActionCreator} from '../redux/reducers/errors/errorsReducer'
 
 const Error = (props) => {
   return (

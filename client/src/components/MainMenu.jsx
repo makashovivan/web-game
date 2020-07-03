@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux' 
-import { startSearchingActionCreator, startCreatingActionCreator } from '../redux/reducers/rootReducer'
+import { searchingRequestActionCreator, creatingRequestActionCreator } from '../redux/reducers/root/actions'
 
 const MainMenu = ({startSearching, startCreating}) => {
 
@@ -16,8 +16,8 @@ const MainMenu = ({startSearching, startCreating}) => {
 }
 
 const mapDispatchToProps = {
-  startSearching: startSearchingActionCreator,
-  startCreating: startCreatingActionCreator,
+  startSearching: searchingRequestActionCreator,
+  startCreating: creatingRequestActionCreator,
 }
 
 export default connect(null, mapDispatchToProps)(MainMenu)

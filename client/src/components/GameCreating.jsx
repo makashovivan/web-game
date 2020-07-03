@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux' 
-import { goToGameActionCreator, goToMenuActionCreator } from '../redux/reducers/rootReducer'
+import { goToGameActionCreator, goToMenuActionCreator } from '../redux/reducers/root/actions'
 
 const GameCreating = (props) => {
 
@@ -43,7 +43,7 @@ const GameCreating = (props) => {
 const mapStateToProps = state => {
   return {
     socket: state.socket,
-    roomCode: state.roomcode,
+    roomCode: state.roomCode,
   }
 }
 

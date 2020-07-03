@@ -2,8 +2,8 @@ import React, {useEffect} from 'react'
 import { connect } from 'react-redux' 
 import GameController  from './GameController'
 import { useHistory } from 'react-router-dom'
-import { opponentLeavedActionCreator } from '../redux/reducers/errorsReducer'
-import { gameUnmountActionCreator } from '../redux/reducers/rootReducer'
+import { opponentLeavedActionCreator } from '../redux/reducers/errors/errorsReducer'
+import { goToMenuActionCreator } from '../redux/reducers/root/actions'
 
   const Game = (props) => {
 
@@ -53,7 +53,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   opponentLeaved: opponentLeavedActionCreator, 
-  gameUnmount: gameUnmountActionCreator, 
+  gameUnmount: goToMenuActionCreator, 
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game)

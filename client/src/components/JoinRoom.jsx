@@ -1,52 +1,46 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux' 
-import {goToGameActionCreator, joinRequestActionCreator, changeRoomCodeActionCreator} from '../redux/reducers/rootReducer'
+import { useDispatch, useSelector } from 'react-redux' 
+import {goToGameActionCreator, joinRequestActionCreator, setRoomCodeActionCreator} from '../redux/reducers/root/actions'
 
-const JoinRoom = (props) => {
+const JoinRoom = ({history}) => {
 
+  const dispatch = useDispatch()
+  const socket = useSelector(state => state.socket)
+  const roomCode = useSelector(state => state.roomCode)
   const roomCodeArea = React.createRef()
 
   const goToGame = () => {
-    props.goToGame()
-    props.history.push('/Game')
+    dispatch(goToGameActionCreator())
+    history.push('/Game')
   }
 
   const sendRoomCode = () => {
-    props.socket.send(JSON.stringify({type: 'ROOM_CODE', payload: props.roomCode}))
+    socket.send(JSON.stringify({type: 'ROOM_CODE', payload: roomCode}))
   }
 
   useEffect(() => {
-    props.joinRequest()
-    props.socket.onmessage = msg => {
-      const message = JSON.parse(msg.data)
-      switch (message.type) {
-        case "START_GAME" :
-          goToGame()
-          break
-      }
-    }
+    console.log('РЕНДЕРИМ ЕГО ПАЦАНЫ')
+    dispatch(joinRequestActionCreator())
+    setTimeout(() => console.log(socket), 2000)
+    console.log(socket)
+    // socket.onmessage = msg => {
+    //   const message = JSON.parse(msg.data)
+    //   switch (message.type) {
+    //     case "START_GAME" :
+    //       goToGame()
+    //       break
+    //   }
+    // }
   },[])
 
   return (
     <div>
       <div>TYPE ROOM CODE HERE</div>
-      <input ref = {roomCodeArea} type="text" value = {props.roomCode} onChange = {() => props.changeRoomCode(roomCodeArea.current.value)}></input>
+      <input ref = {roomCodeArea} type="text" value = {roomCode} onChange = {() => dispatch(setRoomCodeActionCreator(roomCodeArea.current.value))}></input>
       <button onClick = {() => sendRoomCode()}>JoinRoom</button>
     </div>
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    socket: state.socket, 
-    roomCode: state.roomCode,
-  }
-}
 
-const mapDispatchToProps = {
-  goToGame: goToGameActionCreator, 
-  joinRequest: joinRequestActionCreator,
-  changeRoomCode: changeRoomCodeActionCreator,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(JoinRoom)
+export default JoinRoom
