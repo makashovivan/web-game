@@ -21,11 +21,11 @@ export const SET_ROOM_CODE = 'SET_ROOM_CODE'
 
 
 
-export const goToGameActionCreator = () => ({type: GO_TO_GAME})
+export const goToGameActionCreator = (history) => ({type: GO_TO_GAME, history})
 export const goToMenuActionCreator = () => ({type: GO_TO_MENU})
 
-export const searchingRequestActionCreator = () => ({type: SEARCHING_REQUEST})
-export const creatingRequestActionCreator = () => ({type: CREATING_REQUEST})
+export const searchingRequestActionCreator = (history) => ({type: SEARCHING_REQUEST, history})
+export const creatingRequestActionCreator = (history) => ({type: CREATING_REQUEST, history})
 export const joinRequestActionCreator = () => ({type: JOINING_REQUEST})
 
 export const setRoomCodeActionCreator = (roomCode) => ({type: SET_ROOM_CODE, roomCode})

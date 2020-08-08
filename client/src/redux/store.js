@@ -2,7 +2,10 @@ import createSagaMiddleware from 'redux-saga'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import rootReducer from './reducers/root/rootReducer'
 import errorsReducer from './reducers/errors/errorsReducer'
-import {rootSagaWatcher} from './sagas/root.Saga'
+import { rootSagaWatcher } from './sagas/root.Saga'
+import { gameSearchingSagaWatcher } from './sagas/gameSearching.Saga'
+import { gameCreatingSagaWatcher } from './sagas/gameCreating.Saga'
+import { roomJoiningSagaWatcher } from './sagas/joinRoom.Saga'
 
 const combineReducersWithRoot = (rootReducer, reducers) => {
   return (state, action) => {
@@ -24,5 +27,8 @@ let store = createStore(combineReducersWithRoot(rootReducer, {error: errorsReduc
 ))
 
 saga.run(rootSagaWatcher)
+saga.run(gameSearchingSagaWatcher)
+saga.run(gameCreatingSagaWatcher)
+saga.run(roomJoiningSagaWatcher)
 
 export default store

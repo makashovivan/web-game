@@ -1,41 +1,15 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux' 
+import { withRouter } from 'react-router-dom'
 import { goToGameActionCreator, goToMenuActionCreator } from '../redux/reducers/root/actions'
 
 const GameCreating = (props) => {
-
-  const redirectToGame = () => {
-    props.goToGame()
-    props.history.push('/Game')
-  }
-
-  const redirectToMenu = () => {
-    props.goToMenu()
-  }
-
-  const startCreating = () => {
-    props.socket.onopen = () => {                                          
-      props.socket.send(JSON.stringify({type: 'ROOM_CODE', payload: props.roomCode }))
-    }
-    props.socket.onmessage = msg => {
-      const message = JSON.parse(msg.data)
-      switch (message.type) {
-        case "START_GAME" :
-          redirectToGame()
-          break
-      }
-    }
-  }
-
-  useEffect(() => {
-    startCreating()
-  },[])
   
   return (
     <div>
       <div>GAMECREATING</div>
       <div>{props.roomCode}</div>
-      <button onClick = {redirectToMenu}>Stop Creating</button>
+      <button onClick = {props.goToMenu}>Stop Creating</button>
     </div>
   )
 }
@@ -52,4 +26,4 @@ const mapDispatchToProps = {
   goToMenu: goToMenuActionCreator, 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GameCreating)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GameCreating))

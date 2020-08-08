@@ -1,33 +1,14 @@
 import React, { useEffect } from 'react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux' 
 import {goToGameActionCreator, goToMenuActionCreator} from '../redux/reducers/root/actions'
 
 const GameSearching = (props) => {
-
-  const redirectToGame = () => {
-    props.goToGame()
-    props.history.push('/Game')
-  }
-
-  const redirectToMenu = () => {
-    props.goToMenu()
-  }
   
-  useEffect(() => {
-    props.socket.onmessage = msg => {
-      const message = JSON.parse(msg.data)
-      switch (message.type) {
-        case "START_GAME" :
-          redirectToGame(props.socket)
-          break
-      }
-    }
-  },[])
-
   return (
     <div>
       <div> GAMESEARCHING </div>
-      <button onClick = {redirectToMenu}>Stop searching</button>
+      <button onClick = {props.goToMenu}>Stop searching</button>
     </div>
   )
 }
@@ -43,4 +24,4 @@ const mapDispatchToProps = {
   goToMenu: goToMenuActionCreator, 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GameSearching)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GameSearching))
