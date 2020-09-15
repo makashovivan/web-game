@@ -1,5 +1,5 @@
-const {Router} = require('express') 
-const Room = require('../Room')
+import {Router} from 'express'
+import Room from '../Room'
 
 const router = Router()
 const createConnections = {}
@@ -18,10 +18,12 @@ const manageCreateConnection = (connection, code) => {
 }
 
 router.ws('/', (connection, res) => {
-  connection.on('message', (msg) => {
-    const message = JSON.parse(msg)
-    (message.type == 'ROOM_CODE') && manageCreateConnection(connection, message.payload)
+  console.log("ПОДКЛЮЧИЛСЯ")
+  connection.on('message', async (msg) => {
+    console.log(msg)
+    const message = await JSON.parse(msg.toString())
+    message.type == 'ROOM_CODE' && manageCreateConnection(connection, message.payload)
   })
 })
 
-module.exports = {router, createConnections}
+export {router, createConnections}
