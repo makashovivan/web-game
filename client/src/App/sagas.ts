@@ -1,34 +1,23 @@
 import { act } from '@testing-library/react'
 import {takeEvery, put, all, select} from 'redux-saga/effects'
-import {ActionTypes, Actions} from './reducer'
-import {InferActionFromActions} from '../store'
+import {ActionTypes, Actions, appActions} from './reducer'
+import {InferActionFromActions} from '@Store'
 
-
-export function* rootSagaWatcher() {
+export function* appSagaWatcher() {
   yield all([
     takeEvery<ActionTypes>("SET_WAITING_TYPE", handleWaitingtype),
     takeEvery<ActionTypes>("SET_PATH", handleRedirect)
   ])
 }
 
-
 function* handleRedirect(action: InferActionFromActions<Actions, "SET_PATH">) {
   const history = action.history
   history.push(action.path)
-  switch (action.path) {
-    case "/":
-      break    
-    case "/Game":
-      break
-    case "/JoinRoom":
-      break
-  }
 }
 
 function* handleWaitingtype(action: InferActionFromActions<Actions, "SET_WAITING_TYPE">) {
-  //
+  
 }
-
 
 
 // function* handleGameRedirect(action) {

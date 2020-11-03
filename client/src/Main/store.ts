@@ -1,14 +1,14 @@
 import createSagaMiddleware from 'redux-saga'
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux'
-import mainReducer from './App/reducer'
-import errorsReducer from './Features/Errors/reducer'
-import {rootSagaWatcher} from './App/sagas'
-import {roomSearchingSagaWatcher} from './Features/Pages/MainMenu/RoomSearching/sagas'
-import {roomCreatingSagaWatcher} from './Features/Pages/MainMenu/RoomCreating/sagas'
-import {roomJoiningSagaWatcher} from './Features/Pages/RoomJoining/sagas'
+import appReducer from '../App/reducer'
+import errorsReducer from '@Common/Widgets/Errors/reducer'
+import {appSagaWatcher} from '../App/sagas'
+import {roomSearchingSagaWatcher} from '../Features/Screens/MainMenu/RoomSearching/sagas'
+import {roomCreatingSagaWatcher} from '../Features/Screens/MainMenu/RoomCreating/sagas'
+import {roomJoiningSagaWatcher} from '../Features/Screens/RoomJoining/sagas'
 
 const rootReducer = combineReducers({
-  main: mainReducer,
+  main: appReducer,
   errors: errorsReducer,
 })
 
@@ -20,7 +20,7 @@ const store = createStore(
   rootReducer,
   compose(applyMiddleware(saga))
  )
-saga.run(rootSagaWatcher)
+saga.run(appSagaWatcher)
 saga.run(roomSearchingSagaWatcher)
 saga.run(roomCreatingSagaWatcher)
 saga.run(roomJoiningSagaWatcher)

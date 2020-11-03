@@ -1,10 +1,10 @@
 import {takeEvery, put, call, all, select, take} from 'redux-saga/effects'
-import * as actions from '../../../App/actions'
+import {appActions} from '@App'
 
 
 export function* roomJoiningSagaWatcher() {
   yield all([
-    takeEvery(actions.SEND_ROOM_CODE, sendRoomCode),
+    //takeEvery(actions.SEND_ROOM_CODE, sendRoomCode),
   ])
 }
 
@@ -12,7 +12,7 @@ function* sendRoomCode(action: any) {
     const resp = yield call(checkRoomCode)
   switch (resp.type) {
     case "START_GAME" :
-      yield put(actions.goToGameActionCreator(action.history))
+      //yield put(actions.goToGameActionCreator(action.history))
     break
   }
 }

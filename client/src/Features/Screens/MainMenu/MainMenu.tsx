@@ -1,12 +1,9 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
-import {actions} from '../../../App/reducer'
+import {withRouter, Link} from 'react-router-dom'
+import {appActions} from '@App'
 
 const MainMenu = ({startSearching, startCreating, history}) => {
-
-  
 
   return (
     <div>
@@ -21,8 +18,9 @@ const MainMenu = ({startSearching, startCreating, history}) => {
 }
 
 const mapDispatchToProps = {
-  startSearching: actions.setPath,
-  startCreating: actions.setPath,
+  startSearching: appActions.setPath,
+  startCreating: appActions.setPath,
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(MainMenu))
+const mainMenuToExport = withRouter(connect(null, mapDispatchToProps)(MainMenu))
+export {mainMenuToExport}

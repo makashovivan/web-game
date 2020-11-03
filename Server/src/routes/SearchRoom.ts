@@ -6,12 +6,13 @@ import ws from 'ws';
 const router: ExpressWs.Router = Router()
 
 
-let SearchingConnections: Record<string, ws> = {}
+let SearchingConnections: Map<string, ws> = new Map()
 
 router.get('/', async (req, res) => {
-  if (checkSearchingConnections()) {
+
+  if (SearchingConnections.size) {
     const roomID = getFirstSearchingConnection()
-    Rooms[roomID] = []
+    Rooms.set(roomID, [])
     notificateWaiter(roomID)
 
     //delete  SearchingConnections[roomID]
@@ -26,11 +27,11 @@ router.get('/', async (req, res) => {
 router.ws('/wait/roomID/:room_id', (connection, res) => {
   const roomID = res.params.room_id
   console.log(`кладем в searchingConnection ${roomID}`)
-  SearchingConnections[roomID] = connection
+  SearchingConnections.set(roomID, connection)
   connection.onclose = () => {
-    if (roomID in SearchingConnections){
-      console.log(`FREE SEARCHING CLIENT ${roomID} DISCONNECTED`)  
-      delete  SearchingConnections[roomID]
+    if (SearchingConnections.has(roomID)){
+      console.log(`FREE SEARCHING CLIENT ${roomID} DISCONNECTED`)
+      SearchingConnections.delete(roomID)
     }
   }
 
@@ -41,11 +42,6 @@ router.ws('/wait/roomID/:room_id', (connection, res) => {
   //   }
   // })
 })
-                     
-const checkSearchingConnections = () => {
-  const ids = Object.keys(SearchingConnections)
-  return ids.length >= 1
-}
 
 const getFirstSearchingConnection = () => {
   const ids: string[] = Object.keys(SearchingConnections)
@@ -53,7 +49,7 @@ const getFirstSearchingConnection = () => {
 }
 
 const notificateWaiter = (waiterID: string) => {
-  SearchingConnections[waiterID].send('Abstract message')
+  SearchingConnections.get(waiterID).send('Abstract message')
 }
 
 

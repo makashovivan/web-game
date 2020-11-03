@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Portal from '../Portal/index'
+import Portal from '../Portal'
 
 const ModalWindow = ({children}) => {
   return (

@@ -4,12 +4,12 @@ import Room from '../Room'
 import * as ws from 'ws';
 const router = Router()
 
-let Rooms : Record<string, ws[]> = {}
+let Rooms: Map<string, ws[]> = new Map()
 
 router.ws('/roomID/:room_id', async (connection, res) => {
   const roomID = res.params.room_id
-  let ids = Object.keys(Rooms)
-  if (ids.some((id) => id === roomID)) {
+
+  if (Rooms.has(roomID)) {
     Rooms[roomID].push(connection)
     console.log(`Подключился игрок №${Rooms[roomID].length}`)
     if (checkRoomReadyState(Rooms[roomID])) {

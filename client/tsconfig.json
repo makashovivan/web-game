@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "downlevelIteration": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
@@ -19,7 +20,14 @@
     "resolveJsonModule": true,
     "isolatedModules": false,
     "noEmit": true,
-    "strict": false
+    "strict": false,
+    "baseUrl": "src",
+    "paths": {
+      "@Common/*": ["Common/*"],
+      "@Features/*":["Features/*"],
+      "@App":["App/index.ts"],
+      "@Store":["Main/store.ts"],
+    }
   },
   "exclude": [
     "node_modules",

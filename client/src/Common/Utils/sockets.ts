@@ -1,5 +1,5 @@
 
-export const openSocket = (path: string): Promise<WebSocket> => {                  // ДОРАБОТАТЬ ПОВЕДЕНИЕ ПРИ ОШИБКЕ
+const openSocket = (path: string): Promise<WebSocket> => {                  // ДОРАБОТАТЬ ПОВЕДЕНИЕ ПРИ ОШИБКЕ
   return new Promise<WebSocket>((resolve, reject) => {
     const socket = new WebSocket(`ws://localhost:8000${path}`)
     setTimeout(() => {
@@ -11,7 +11,7 @@ export const openSocket = (path: string): Promise<WebSocket> => {               
   })
 }
 
-export const handleClose = (socket: WebSocket) => {
+const handleClose = (socket: WebSocket) => {
   return new Promise((resolve, reject) => {
     socket.onclose = (event) => {
       resolve(event)
@@ -21,4 +21,6 @@ export const handleClose = (socket: WebSocket) => {
     }
   })
 }
+
+export {openSocket, handleClose}
 

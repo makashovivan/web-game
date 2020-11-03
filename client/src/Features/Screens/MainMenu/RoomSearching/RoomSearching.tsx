@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux' 
-import {goToMenuActionCreator} from '../../../../App/actions'
 
 const RoomSearching = (props) => {
   return (
@@ -19,7 +18,9 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  goToMenu: goToMenuActionCreator, 
+  //goToMenu: goToMenuActionCreator, 
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RoomSearching))
+const roomSearchingToExport = withRouter(connect(mapStateToProps, mapDispatchToProps)(RoomSearching))
+
+export {roomSearchingToExport}

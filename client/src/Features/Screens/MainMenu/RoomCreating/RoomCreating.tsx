@@ -1,9 +1,6 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux' 
 import {withRouter} from 'react-router-dom'
-import {
-  goToGameActionCreator, 
-  goToMenuActionCreator} from '../../../../App/actions'
 
 const RoomCreating = (props) => {
   
@@ -24,8 +21,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  goToGame: goToGameActionCreator, 
-  goToMenu: goToMenuActionCreator, 
+  goToGame: null,//goToGameActionCreator, 
+  goToMenu: null,//goToMenuActionCreator, 
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RoomCreating))
+const roomCreatingToExport = withRouter(connect(mapStateToProps, mapDispatchToProps)(RoomCreating))
+
+export {roomCreatingToExport}

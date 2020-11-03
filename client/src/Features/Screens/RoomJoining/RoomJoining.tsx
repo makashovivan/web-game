@@ -1,10 +1,7 @@
 import React, {InputHTMLAttributes, useEffect} from 'react'
 import {connect} from 'react-redux' 
 import {withRouter} from 'react-router-dom'
-import {
-  setRoomCodeActionCreator,
-  sendRoomCodeAcrionCreator,
-  joinRequestActionCreator} from '../../../App/actions'
+
 
 const RoomJoining = ({roomCode, sendRoomCode, setRoomCode, history}) => {
 
@@ -26,9 +23,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  sendRoomCode: sendRoomCodeAcrionCreator,
-  setRoomCode: setRoomCodeActionCreator,  
+  sendRoomCode: null,//sendRoomCodeAcrionCreator,
+  setRoomCode: null,//setRoomCodeActionCreator,  
 }
 
+const roomJoiningToExport = withRouter(connect(mapStateToProps, mapDispatchToProps)(RoomJoining))
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RoomJoining))
+export {roomJoiningToExport}

@@ -1,13 +1,13 @@
 import React from 'react'
 import {useSelector} from 'react-redux'
 import {Route, Redirect, Switch} from 'react-router-dom'
-import MainMenu from '../Features/Pages/MainMenu/index'
-import RoomJoining from '../Features/Pages/RoomJoining/index'
-import Game from '../Features/Pages/Game/index'
-import RoomSearching from '../Features/Pages/MainMenu/RoomSearching'
-import RoomCreating from '../Features/Pages/MainMenu/RoomCreating'
-import ModalWindow from '../Common/Components/ModalWindow'
-import {AppStateType} from '../store'
+import {MainMenu} from '@Features/Screens/MainMenu'
+import {RoomJoining} from '@Features/Screens/RoomJoining'
+import {Game} from '@Features/Screens/Game'
+import {RoomSearching} from '@Features/Screens/MainMenu/RoomSearching'
+import {RoomCreating} from '@Features/Screens/MainMenu/RoomCreating'
+import ModalWindow from '@Common/Components/ModalWindow'
+import {AppStateType} from '@Store'
 import './App.css'
 
 const App: React.FC = () => {
@@ -37,4 +37,4 @@ const App: React.FC = () => {
   )
 }
 
-export default App
+export {App}

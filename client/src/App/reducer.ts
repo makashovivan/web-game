@@ -1,22 +1,25 @@
-import {InferActions, InferActionsTypes} from '../store'
+import {InferActions, InferActionsTypes} from '@Store'
 import {History} from 'history'
 
 type WaitingType = "RoomSearching" | "RoomCreating" | "RoomJoining" 
-type Pages = "/" | "/JoinRoom" | "/Game" | ""
+type Screens = "/" | "/JoinRoom" | "/Game" | ""
 
-let initialState = {
+const initialState = {
   gameAcces: false,
   waitingType: null,
   path: "/",
 }
 
-export type IMainState = typeof initialState
+export const appActions = {
+  setGameAccess: (gameAccess: boolean) => ({type: "SET_GAME_ACCESS", gameAccess} as const),
+  setPath: (path: Screens, history: History) => ({type: "SET_PATH", path, history} as const),
+  setWaitingType: (waitingType: WaitingType) => ({type: "SET_WAITING_TYPE", waitingType} as const),
+  setError: () => ({type: "SET_ERROR"} as const),
+  setNotification: () => ({type: "SET_NOTIFICATION"} as const)
+}
 
-
-const mainReducer = (state: IMainState = initialState, action: Actions) => {
-
+const appReducer = (state: IAppState = initialState, action: Actions) => {
   switch (action.type) {
-
     case "SET_GAME_ACCESS": 
       console.log("SET_GAME_ACCESS")
       return {...state, gameAcces: action.gameAccess}
@@ -34,16 +37,8 @@ const mainReducer = (state: IMainState = initialState, action: Actions) => {
   }
 }
 
-export const actions = {
-  setGameAccess: (gameAccess: boolean) => ({type: "SET_GAME_ACCESS", gameAccess} as const),
-  setPath: (path: Pages, history: History) => ({type: "SET_PATH", path, history} as const),
-  setWaitingType: (waitingType: WaitingType) => ({type: "SET_WAITING_TYPE", waitingType} as const),
-  setError: () => ({type: "SET_ERROR"} as const),
-  setNotification: () => ({type: "SET_NOTIFICATION"} as const)
-}
-
-export type Actions = InferActions<typeof actions>
-
+export type IAppState = typeof initialState
+export type Actions = InferActions<typeof appActions>
 export type ActionTypes = InferActionsTypes<Actions>
 
-export default mainReducer
+export default appReducer

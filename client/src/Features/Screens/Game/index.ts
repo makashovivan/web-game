@@ -1,0 +1,1 @@
+export {gameToExport as Game} from './Game'
