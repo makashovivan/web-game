@@ -1,2 +1,2 @@
 export {App} from './App' 
-export {appActions} from './reducer'
+export {appActions} from './AppReducer'

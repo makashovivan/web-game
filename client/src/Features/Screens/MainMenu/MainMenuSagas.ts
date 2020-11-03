@@ -1,8 +1,7 @@
-import { act } from '@testing-library/react'
 import {takeEvery, put, all, select} from 'redux-saga/effects'
-import {ActionTypes, Actions, mainMenuActions} from './reducer'
-import {appActions} from '../../../App/reducer'
-import {InferActionFromActions} from 'Main/store'
+import {ActionTypes, Actions, mainMenuActions} from './MainMenuReducer'
+import {appActions} from '@App'
+import {InferActionFromActions} from '@Store'
 
 
 export function* mainMenuSagaWatcher() {

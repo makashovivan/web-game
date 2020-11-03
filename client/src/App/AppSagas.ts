@@ -1,6 +1,6 @@
 import { act } from '@testing-library/react'
 import {takeEvery, put, all, select} from 'redux-saga/effects'
-import {ActionTypes, Actions, appActions} from './reducer'
+import {ActionTypes, Actions, appActions} from './AppReducer'
 import {InferActionFromActions} from '@Store'
 
 export function* appSagaWatcher() {
