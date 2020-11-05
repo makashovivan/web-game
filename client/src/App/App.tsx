@@ -7,7 +7,7 @@ import {Game} from '@Features/Screens/Game'
 import {RoomSearching} from '@Features/WaitingWidgets/RoomSearching'
 import {RoomCreating} from '@Features/WaitingWidgets/RoomCreating'
 import ModalWindow from '@Common/Components/ModalWindow'
-import {AppStateType} from '@Store'
+import {AppStateType} from 'store'
 import './App.css'
 
 const App: React.FC = () => {

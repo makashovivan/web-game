@@ -1,4 +1,4 @@
-import {InferActions, InferActionsTypes} from '@Store'
+import {InferActions, InferActionsTypes} from 'store'
 import {History} from 'history'
 
 type WaitingType = "RoomSearching" | "RoomCreating" | "RoomJoining" 

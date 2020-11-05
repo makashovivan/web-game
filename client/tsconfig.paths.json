@@ -1,0 +1,11 @@
+{
+  "compilerOptions": { 
+    "baseUrl": "src",
+    "paths": {
+      "@Common/*": ["Common/*"],
+      "@Features/*":["Features/*"],
+      "@App":["App/index.ts"],
+      "@CommonTypes/*":["../../CommonTypes/*"]
+    }
+  }
+}

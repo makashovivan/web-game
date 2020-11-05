@@ -1,15 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import {appActions} from '@App'
+import {mainMenuActions} from './MainMenuReducer'
 
-const MainMenu = ({startSearching, startCreating, history}) => {
+const MainMenu = ({initRoomSearching, initRoomCreating, history}) => {
 
   return (
     <div>
       <input type="text"/>
-      <button onClick = {() => startSearching('/JoinRoom', history)}>Search game</button>
-      <button onClick = {() => startCreating('/JoinRoom', history)}>Create room</button>
+      <button onClick = {() => initRoomSearching()}>Search game</button>
+      <button onClick = {() => initRoomCreating()}>Create room</button>
       <Link to = '/JoinRoom'>
         <button>Join room</button>
       </Link>    
@@ -18,8 +18,8 @@ const MainMenu = ({startSearching, startCreating, history}) => {
 }
 
 const mapDispatchToProps = {
-  startSearching: appActions.setPath,
-  startCreating: appActions.setPath,
+  initRoomSearching: mainMenuActions.initRoomSearching,
+  initRoomCreating: mainMenuActions.initRoomCreating,
 }
 
 const mainMenuToExport = withRouter(connect(null, mapDispatchToProps)(MainMenu))

@@ -1,17 +1,19 @@
-import {InferActions, InferActionsTypes} from 'Main/store'
+import {InferActions, InferActionsTypes} from 'store'
 
 const initialState = {
-  
+  test: "test"
 }
 
 export const mainMenuActions = {
-  initGameSearching: () => ({type: "INIT_GAME_SEARCHING"} as const),
-  initGameCreating: () => ({type: "INIT_GAME_CREATING"} as const),
-  initGameJoining: () => ({type: "INIT_GAME_JOINING"} as const),
+  initRoomSearching: () => ({type: "INIT_ROOM_SEARCHING"} as const),
+  initRoomCreating: () => ({type: "INIT_ROOM_CREATING"} as const),
 }
 
 const mainMenuReducer = (state: IMainMenuState = initialState, action: Actions) => {
-
+  switch (action.type) {
+    default:
+      return {...state}
+  }
 }
 
 export type IMainMenuState = typeof initialState

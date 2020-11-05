@@ -35,6 +35,7 @@ import {opponentLeavedActionCreator} from '@Common/Widgets/Errors/reducer'
 
   return (
     <div>
+      <div>GAME</div>
       <canvas ref =  {canvasRef}
 							width = {'1000px'}
 							height= {'400px'}

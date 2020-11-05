@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react'
 import {takeEvery, put, all, select} from 'redux-saga/effects'
 import {ActionTypes, Actions, appActions} from './AppReducer'
-import {InferActionFromActions} from '@Store'
+import {InferActionFromActions} from 'store'
 
 export function* appSagaWatcher() {
   yield all([
@@ -11,8 +11,8 @@ export function* appSagaWatcher() {
 }
 
 function* handleRedirect(action: InferActionFromActions<Actions, "SET_PATH">) {
-  const history = action.history
-  history.push(action.path)
+  // const history = action.history
+  // history.push(action.path)
 }
 
 function* handleWaitingtype(action: InferActionFromActions<Actions, "SET_WAITING_TYPE">) {

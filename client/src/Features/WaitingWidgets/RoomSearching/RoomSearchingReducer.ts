@@ -1,5 +1,4 @@
-import {InferActions, InferActionsTypes} from 'Main/store'
-import {History} from 'history'
+import {InferActions, InferActionsTypes} from 'store'
 
 let initialState = {
   socket: WebSocket
@@ -7,7 +6,7 @@ let initialState = {
 
 export const roomSearchingActions = {
   setSearchingSocket: (socket: WebSocket) => ({type: "SET_SEARCHING_SOCKET", socket} as const),
-  requestGameSearching: (history: History) => ({type: "REQUEST_GAME_SEARCHING", history} as const),
+  requestRoomSearching: () => ({type: "REQUEST_ROOM_SEARCHING"} as const),
 }
 
 const roomSearchingReducer = (state: IRoomSearchingState = initialState, action: Actions) => {
