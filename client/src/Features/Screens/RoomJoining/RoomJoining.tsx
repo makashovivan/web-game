@@ -1,9 +1,10 @@
 import React, {InputHTMLAttributes, useEffect} from 'react'
 import {connect} from 'react-redux' 
 import {withRouter} from 'react-router-dom'
+import {withHistoryUpdate} from '@Common/HOC/withHistoryUpdate'
 
 
-const RoomJoining = ({roomCode, sendRoomCode, setRoomCode, history}) => {
+const RoomJoining = ({roomCode, sendRoomCode, setRoomCode}) => {
 
   const roomCodeArea = React.createRef<HTMLInputElement>()
 
@@ -11,7 +12,7 @@ const RoomJoining = ({roomCode, sendRoomCode, setRoomCode, history}) => {
     <div>
       <div>TYPE ROOM CODE HERE</div>
       <input ref = {roomCodeArea} type="text" value = {roomCode} onChange = {() => setRoomCode(roomCodeArea.current.value)}></input>
-      <button onClick = {() => sendRoomCode(history)}>RoomJoining</button>
+      <button onClick = {() => {}}>RoomJoining</button>
     </div>
   )
 }
@@ -27,6 +28,6 @@ const mapDispatchToProps = {
   setRoomCode: null,//setRoomCodeActionCreator,  
 }
 
-const roomJoiningToExport = withRouter(connect(mapStateToProps, mapDispatchToProps)(RoomJoining))
+const roomJoiningToExport = withHistoryUpdate(connect(mapStateToProps, mapDispatchToProps)(RoomJoining))
 
 export {roomJoiningToExport}

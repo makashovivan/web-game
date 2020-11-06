@@ -11,8 +11,8 @@ export function* appSagaWatcher() {
 }
 
 function* handleRedirect(action: InferActionFromActions<Actions, "SET_PATH">) {
-  // const history = action.history
-  // history.push(action.path)
+  const history = yield select(state => state.main.history)
+  history.push(action.path)
 }
 
 function* handleWaitingtype(action: InferActionFromActions<Actions, "SET_WAITING_TYPE">) {

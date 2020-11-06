@@ -30,7 +30,10 @@ const App: React.FC = () => {
         <Route exact path = '/JoinRoom'>
           <RoomJoining/>
         </Route>
-        {state.main.gameAcces && <Route exact path = '/Game' render = {() => <Game/>} />}
+        {state.main.gameAcces &&
+          <Route exact path = '/Game'>
+            <Game/>
+          </Route>}
         <Redirect to = '/'/>
       </Switch>
     </div>

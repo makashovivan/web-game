@@ -11,8 +11,9 @@ const initialState = {
 }
 
 export const appActions = {
+  setHistory: (history: History) => ({type: "SET_HISTORY", history} as const),
   setGameAccess: (gameAccess: boolean) => ({type: "SET_GAME_ACCESS", gameAccess} as const),
-  setPath: (path: Screens, history: History) => ({type: "SET_PATH", path, history} as const),
+  setPath: (path: Screens) => ({type: "SET_PATH", path} as const),
   setWaitingType: (waitingType: WaitingType) => ({type: "SET_WAITING_TYPE", waitingType} as const),
   setError: () => ({type: "SET_ERROR"} as const),
   setNotification: () => ({type: "SET_NOTIFICATION"} as const)
@@ -20,6 +21,11 @@ export const appActions = {
 
 const appReducer = (state: IAppState = initialState, action: Actions) => {
   switch (action.type) {
+
+    case "SET_HISTORY":
+      console.log("SET_HISTORY")
+      return {...state, history: action.history, path: action.history.location.pathname}
+
     case "SET_GAME_ACCESS": 
       console.log("SET_GAME_ACCESS")
       return {...state, gameAcces: action.gameAccess}

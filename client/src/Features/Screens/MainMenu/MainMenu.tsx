@@ -2,8 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {mainMenuActions} from './MainMenuReducer'
+import {withHistoryUpdate} from '@Common/HOC/withHistoryUpdate'
 
-const MainMenu = ({initRoomSearching, initRoomCreating, history}) => {
+const MainMenu = ({initRoomSearching, initRoomCreating}) => {
 
   return (
     <div>
@@ -22,5 +23,5 @@ const mapDispatchToProps = {
   initRoomCreating: mainMenuActions.initRoomCreating,
 }
 
-const mainMenuToExport = withRouter(connect(null, mapDispatchToProps)(MainMenu))
+const mainMenuToExport = withHistoryUpdate(connect(null, mapDispatchToProps)(MainMenu))
 export {mainMenuToExport}
