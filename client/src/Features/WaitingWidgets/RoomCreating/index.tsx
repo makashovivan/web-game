@@ -1,1 +1,1 @@
-export {roomCreatingToExport as RoomCreating} from './RoomCreating'
+export {default as RoomCreating} from './RoomCreating'

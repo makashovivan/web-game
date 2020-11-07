@@ -1,8 +1,8 @@
 import React, {InputHTMLAttributes, useEffect} from 'react'
+import {compose} from 'redux'
 import {connect} from 'react-redux' 
-import {withRouter} from 'react-router-dom'
 import {withHistoryUpdate} from '@Common/HOC/withHistoryUpdate'
-
+import {StateType} from 'rootReducer'
 
 const RoomJoining = ({roomCode, sendRoomCode, setRoomCode}) => {
 
@@ -17,9 +17,9 @@ const RoomJoining = ({roomCode, sendRoomCode, setRoomCode}) => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: StateType) => {
   return {
-    roomCode: state.roomCode,
+    roomCode: state,
   }
 }
 
@@ -28,6 +28,8 @@ const mapDispatchToProps = {
   setRoomCode: null,//setRoomCodeActionCreator,  
 }
 
-const roomJoiningToExport = withHistoryUpdate(connect(mapStateToProps, mapDispatchToProps)(RoomJoining))
+export default compose(
+  withHistoryUpdate,
+  connect(mapStateToProps, mapDispatchToProps)
+)(RoomJoining)
 
-export {roomJoiningToExport}

@@ -1,13 +1,14 @@
-import {InferActions, InferActionsTypes} from 'store'
+import {InferActions, InferActionsTypes} from '@Common/Types/ReduxTypes'
 import {History} from 'history'
 
 type WaitingType = "RoomSearching" | "RoomCreating" | "RoomJoining" 
 type Screens = "/" | "/JoinRoom" | "/Game" | ""
 
 const initialState = {
-  gameAcces: false,
+  gameAccess: false,
   waitingType: null,
   path: "/",
+  history: null,
 }
 
 export const appActions = {
@@ -28,7 +29,7 @@ const appReducer = (state: IAppState = initialState, action: Actions) => {
 
     case "SET_GAME_ACCESS": 
       console.log("SET_GAME_ACCESS")
-      return {...state, gameAcces: action.gameAccess}
+      return {...state, gameAccess: action.gameAccess}
     
     case "SET_PATH":
       console.log("SET_PATH")

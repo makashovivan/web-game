@@ -1,6 +1,7 @@
 import React from 'react'
+import {compose} from 'redux'
 import {connect} from 'react-redux'
-import {withRouter, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {mainMenuActions} from './MainMenuReducer'
 import {withHistoryUpdate} from '@Common/HOC/withHistoryUpdate'
 
@@ -23,5 +24,7 @@ const mapDispatchToProps = {
   initRoomCreating: mainMenuActions.initRoomCreating,
 }
 
-const mainMenuToExport = withHistoryUpdate(connect(null, mapDispatchToProps)(MainMenu))
-export {mainMenuToExport}
+export default compose(
+  withHistoryUpdate,
+  connect(null, mapDispatchToProps)
+)(MainMenu)

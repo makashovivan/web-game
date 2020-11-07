@@ -1,43 +1,51 @@
 import React from 'react'
-import {useSelector} from 'react-redux'
+import {connect} from 'react-redux'
 import {Route, Redirect, Switch} from 'react-router-dom'
 import {MainMenu} from '@Features/Screens/MainMenu'
 import {RoomJoining} from '@Features/Screens/RoomJoining'
 import {Game} from '@Features/Screens/Game'
 import {RoomSearching} from '@Features/WaitingWidgets/RoomSearching'
 import {RoomCreating} from '@Features/WaitingWidgets/RoomCreating'
-import ModalWindow from '@Common/Components/ModalWindow'
-import {AppStateType} from 'store'
-import './App.css'
+import {StateType} from 'rootReducer'
 
-const App: React.FC = () => {
 
-  const state: AppStateType = useSelector<AppStateType, AppStateType>(state => state)
+const App = ({gameAccess, waitingType}) => {
+
+  const waitingWidgetsMap = new Map<string, JSX.Element>(
+    [
+      ["RoomSearching", <RoomSearching/>],
+      ["RoomCreating", <RoomCreating/>],
+    ]
+  )
+  const routes = (
+    <Switch>
+      <Route exact path = '/'>
+        <MainMenu/>
+      </Route>
+      <Route exact path = '/JoinRoom'>
+        <RoomJoining/>
+      </Route>
+      {gameAccess &&
+        <Route exact path = '/Game'>
+          <Game/>
+        </Route>}
+      <Redirect to = '/'/>
+    </Switch>
+  )
 
   return (
     <div>
-      {/* {state.error.render && <ModalWindow/>} */}
-      {state.main.waitingType === "RoomSearching" && <RoomSearching/>}
-      {state.main.waitingType === "RoomCreating" && <RoomCreating/>}
-
-      <div>{'State = ' + JSON.stringify(state)}</div> 
-      <div>{'Game Acces = ' + state.main.gameAcces}</div> 
-
-      <Switch>
-        <Route exact path = '/'>
-          <MainMenu/>
-        </Route>
-        <Route exact path = '/JoinRoom'>
-          <RoomJoining/>
-        </Route>
-        {state.main.gameAcces &&
-          <Route exact path = '/Game'>
-            <Game/>
-          </Route>}
-        <Redirect to = '/'/>
-      </Switch>
+      {waitingWidgetsMap.get(waitingType)}
+      {routes}
     </div>
   )
 }
 
-export {App}
+const mapStateToProps = (state: StateType) => {
+  return {
+    gameAccess: state.app.gameAccess,
+    waitingType: state.app.waitingType,
+  }
+}
+
+export default connect(mapStateToProps)(App)

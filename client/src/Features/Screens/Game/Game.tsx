@@ -1,37 +1,43 @@
 import React, {useEffect} from 'react'
-import {connect} from 'react-redux' 
-import {useHistory} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {compose} from 'redux'
 import GameController  from './GameController'
 import {opponentLeavedActionCreator} from '@Common/Widgets/Errors/reducer'
+import {withHistoryUpdate} from '@Common/HOC/withHistoryUpdate'
+import {StateType} from 'rootReducer'
 
   const Game = (props) => {
 
-  const history = useHistory()
   const canvasRef = React.useRef(null)
   let ctx
 
-  const onOpponentLeave = () => {
-    console.log("Opponent Leaved")
-    history.push('/')
-    props.opponentLeaved()
-  }
+  // const onOpponentLeave = () => {
+  //   console.log("Opponent Leaved")
+  //   history.push('/')
+  //   props.opponentLeaved()
+  // }
 
   useEffect(() => {
-    const canvas =  canvasRef.current
-    ctx = canvas.getContext('2d')
-    const game = new GameController(props.socket, ctx, onOpponentLeave)
-    const keyboardHandler = (event) => {
-      game.onKeyPress(event)
-    }
-    document.addEventListener('keydown', keyboardHandler)
-    game.initDrawing()
-    return () => {
-      console.log("GAMEUNMOUNT")
-      document.removeEventListener('keydown',  keyboardHandler)
-      game.stopDrawing()
-      props.gameUnmount()
-    }
+    console.log("ONGAMEMOUNT")
+    // const canvas =  canvasRef.current
+    // ctx = canvas.getContext('2d')
+    // const game = new GameController(props.socket, ctx, onOpponentLeave)
+    // const keyboardHandler = (event) => {
+    //   game.onKeyPress(event)
+    // }
+    // document.addEventListener('keydown', keyboardHandler)
+    // game.initDrawing()
+    // return () => {
+    //   console.log("GAMEUNMOUNT")
+    //   document.removeEventListener('keydown',  keyboardHandler)
+    //   game.stopDrawing()
+    //   props.gameUnmount()
+    // }
   },[])
+
+  // if (!props.gameAccess) {
+  //   return <Redirect to = '/'/>
+  // }
 
   return (
     <div>
@@ -45,9 +51,9 @@ import {opponentLeavedActionCreator} from '@Common/Widgets/Errors/reducer'
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: StateType) => {
   return {
-    socket: state.socket, 
+    gameAccess: state.app.gameAccess
   }
 }
 
@@ -56,4 +62,8 @@ const mapDispatchToProps = {
   gameUnmount: null,//goToMenuActionCreator, 
 }
 
-export const gameToExport = connect(mapStateToProps, mapDispatchToProps)(Game)
+export default compose(
+  withHistoryUpdate,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Game)
+

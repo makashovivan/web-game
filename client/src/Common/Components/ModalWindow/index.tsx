@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Portal from '../Portal'
+import {StateType} from 'rootReducer'
 
 const ModalWindow = ({children}) => {
   return (
@@ -16,7 +17,7 @@ const ModalWindow = ({children}) => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: StateType) => {
   return {
     
   }

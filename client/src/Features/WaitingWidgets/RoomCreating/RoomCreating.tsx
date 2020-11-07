@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux' 
-import {withRouter} from 'react-router-dom'
+import {StateType} from 'rootReducer'
 
 const RoomCreating = (props) => {
   
@@ -13,10 +13,10 @@ const RoomCreating = (props) => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: StateType) => {
   return {
-    socket: state.socket,
-    roomCode: state.roomCode,
+    socket: state,
+    roomCode: state,
   }
 }
 
@@ -25,6 +25,5 @@ const mapDispatchToProps = {
   goToMenu: null,//goToMenuActionCreator, 
 }
 
-const roomCreatingToExport = withRouter(connect(mapStateToProps, mapDispatchToProps)(RoomCreating))
+export default connect(mapStateToProps, mapDispatchToProps)(RoomCreating)
 
-export {roomCreatingToExport}

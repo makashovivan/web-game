@@ -3,7 +3,7 @@ import {appActions} from '@App'
 import {ActionTypes, Actions, gameActions} from './GameReducer'
 import {openSocket, handleClose} from '@Common/Utils/sockets'
 import {httpGet, httpPost} from '@Common/Utils/api'
-import { InferActionFromActions } from 'store'
+import { InferActionFromActions } from '@Common/Types/ReduxTypes'
 
 
 export function* gameSagaWatcher() {

@@ -1,1 +1,1 @@
-export {roomJoiningToExport as RoomJoining} from './RoomJoining'
+export {default as RoomJoining} from './RoomJoining'

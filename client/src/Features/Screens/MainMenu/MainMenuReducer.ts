@@ -1,4 +1,4 @@
-import {InferActions, InferActionsTypes} from 'store'
+import {InferActions, InferActionsTypes} from '@Common/Types/ReduxTypes'
 
 const initialState = {
   test: "test"

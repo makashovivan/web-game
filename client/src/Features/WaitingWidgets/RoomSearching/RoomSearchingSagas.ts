@@ -3,7 +3,7 @@ import {appActions} from '@App'
 import {ActionTypes, Actions, roomSearchingActions} from './RoomSearchingReducer'
 import {openSocket, handleClose, getFirstMessage} from '@Common/Utils/sockets'
 import {httpGet, httpPost} from '@Common/Utils/api'
-import {InferActionFromActions} from 'store'
+import {InferActionFromActions} from '@Common/Types/ReduxTypes'
 import {gameActions} from '@Features/Screens/Game'
 import {SearchingStatusType} from '@CommonTypes/SearchingStatusType'
 

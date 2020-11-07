@@ -1,7 +1,7 @@
-import { act } from '@testing-library/react'
-import {takeEvery, put, all, select} from 'redux-saga/effects'
-import {ActionTypes, Actions, appActions} from './AppReducer'
-import {InferActionFromActions} from 'store'
+import {takeEvery, all, select} from 'redux-saga/effects'
+import {ActionTypes, Actions} from './AppReducer'
+import {InferActionFromActions} from '@Common/Types/ReduxTypes'
+import {StateType} from 'rootReducer'
 
 export function* appSagaWatcher() {
   yield all([
@@ -11,7 +11,7 @@ export function* appSagaWatcher() {
 }
 
 function* handleRedirect(action: InferActionFromActions<Actions, "SET_PATH">) {
-  const history = yield select(state => state.main.history)
+  const history = yield select((state: StateType) => state.app.history)
   history.push(action.path)
 }
 

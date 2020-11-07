@@ -1,4 +1,4 @@
-import {InferActions, InferActionsTypes} from 'store'
+import {InferActions, InferActionsTypes} from '@Common/Types/ReduxTypes'
 
 let initialState = {
   socket: WebSocket

@@ -2,7 +2,7 @@
 const BAD_CONNECTION_DELAY = 5000
 
 
-const openSocket = (path: string): Promise<WebSocket> => {                  // ДОРАБОТАТЬ ПОВЕДЕНИЕ ПРИ ОШИБКЕ
+const openSocket = (path: string): Promise<WebSocket> => {  // ДОРАБОТАТЬ ПОВЕДЕНИЕ ПРИ ОШИБКЕ
   return new Promise<WebSocket>((resolve, reject) => {
     const socket = new WebSocket(`ws://localhost:8000${path}`)
     setTimeout(() => {
