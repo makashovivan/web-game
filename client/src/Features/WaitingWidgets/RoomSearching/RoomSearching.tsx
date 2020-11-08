@@ -1,13 +1,23 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
-import {StateType} from 'rootReducer'
+import styled from 'styled-components'
+import {StateType} from 'Store/rootReducer'
+import {ModalWindow} from '@Common/Components/ModalWindow'
+
+const RoomSearchingBody = styled.div`
+  background-color: #d39539;
+  width: 300px;
+  
+`
 
 const RoomSearching = (props) => {
   return (
-    <div>
-      <div> RoomSEARCHING </div>
-      <button onClick = {props.goToMenu}>Stop searching</button>
-    </div>
+    <ModalWindow>
+      <RoomSearchingBody>
+        <div> RoomSEARCHING </div>
+        <button onClick = {props.goToMenu}>Stop searching</button>
+      </RoomSearchingBody>
+    </ModalWindow>
   )
 }
 

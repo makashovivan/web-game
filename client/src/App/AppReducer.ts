@@ -22,23 +22,14 @@ export const appActions = {
 
 const appReducer = (state: IAppState = initialState, action: Actions) => {
   switch (action.type) {
-
     case "SET_HISTORY":
-      console.log("SET_HISTORY")
       return {...state, history: action.history, path: action.history.location.pathname}
-
     case "SET_GAME_ACCESS": 
-      console.log("SET_GAME_ACCESS")
       return {...state, gameAccess: action.gameAccess}
-    
     case "SET_PATH":
-      console.log("SET_PATH")
       return {...state, path: action.path}
-
     case "SET_WAITING_TYPE":
-      console.log("SET_WAITING_TYPE")
       return {...state, waitingType: action.waitingType}
-
     default: 
       return {...state} 
   }

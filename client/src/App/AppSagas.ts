@@ -1,7 +1,7 @@
 import {takeEvery, all, select} from 'redux-saga/effects'
 import {ActionTypes, Actions} from './AppReducer'
 import {InferActionFromActions} from '@Common/Types/ReduxTypes'
-import {StateType} from 'rootReducer'
+import {StateType} from 'Store/rootReducer'
 
 export function* appSagaWatcher() {
   yield all([

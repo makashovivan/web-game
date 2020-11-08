@@ -2,7 +2,7 @@ import React, {InputHTMLAttributes, useEffect} from 'react'
 import {compose} from 'redux'
 import {connect} from 'react-redux' 
 import {withHistoryUpdate} from '@Common/HOC/withHistoryUpdate'
-import {StateType} from 'rootReducer'
+import {StateType} from 'Store/rootReducer'
 
 const RoomJoining = ({roomCode, sendRoomCode, setRoomCode}) => {
 

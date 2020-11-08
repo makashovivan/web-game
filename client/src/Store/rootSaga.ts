@@ -1,5 +1,5 @@
 import {all} from 'redux-saga/effects'
-import {appSagaWatcher} from './App/AppSagas'
+import {appSagaWatcher} from '../App/AppSagas'
 import {roomSearchingSagaWatcher} from '@Features/WaitingWidgets/RoomSearching/RoomSearchingSagas'
 import {roomCreatingSagaWatcher} from '@Features/WaitingWidgets/RoomCreating/RoomCreatingSagas'
 import {roomJoiningSagaWatcher} from '@Features/Screens/RoomJoining/RoomJoiningSagas'

@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import appReducer from './App/AppReducer'
+import appReducer from '../App/AppReducer'
 import errorsReducer from '@Common/Widgets/Errors/reducer'
 import mainMenuReducer from '@Features/Screens/MainMenu/MainMenuReducer'
 import roomSearchingReducer from '@Features/WaitingWidgets/RoomSearching/RoomSearchingReducer'

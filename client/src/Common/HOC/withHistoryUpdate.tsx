@@ -4,7 +4,6 @@ import {withRouter} from 'react-router-dom'
 import {compose} from 'redux'
 import {appActions} from '../../App/AppReducer'
 
-
 /**
  * This HOC updates history object in AppReducer when component mounts
  * 

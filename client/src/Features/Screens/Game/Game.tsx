@@ -4,7 +4,7 @@ import {compose} from 'redux'
 import GameController  from './GameController'
 import {opponentLeavedActionCreator} from '@Common/Widgets/Errors/reducer'
 import {withHistoryUpdate} from '@Common/HOC/withHistoryUpdate'
-import {StateType} from 'rootReducer'
+import {StateType} from 'Store/rootReducer'
 
   const Game = (props) => {
 

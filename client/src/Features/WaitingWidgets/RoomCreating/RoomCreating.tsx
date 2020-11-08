@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {connect} from 'react-redux' 
-import {StateType} from 'rootReducer'
+import {StateType} from 'Store/rootReducer'
 
 const RoomCreating = (props) => {
   
