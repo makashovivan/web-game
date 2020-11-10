@@ -4,8 +4,6 @@ type InputPropsType = {
  
 }
 
-
-
 const Input = styled.input<InputPropsType>`
   background-color: #ffffff;
   height: 50px;
@@ -14,6 +12,5 @@ const Input = styled.input<InputPropsType>`
   font-size: 110%;
   padding: 15px;
 `
-
 
 export default Input

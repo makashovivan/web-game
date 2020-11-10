@@ -4,8 +4,6 @@ type ButtonPropsType = {
   size: "small" | "medium" | "large",
 }
 
-
-
 const Button = styled.button<ButtonPropsType>`
   background-color: #1b094b;
   color: white;
